@@ -20,7 +20,7 @@ export default function ButtonAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-          <Link href="/" color="inherit" className={classes.link}>Dashboard</Link>
+          <Link href="/home" color="inherit" className={classes.link}>Dashboard</Link>
           </Typography>
           <Button color="inherit" href="/signin">Sign In</Button>
           <Button color="inherit" href="/signup">Sign Up</Button>
