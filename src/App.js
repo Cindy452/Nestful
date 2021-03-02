@@ -1,5 +1,5 @@
 import React from 'react';
-import HorizontalLabelPositionBelowStepper from './steps/Steps';
+import Stepper from './steps/Steps';
 import SignIn from './components/signin/Signin';
 import SignUp from './components/signup/Signup';
 import Home from './components/Home';
@@ -16,7 +16,7 @@ function App() {
     <Switch>
         <Route exact path="/">
         <NavMenu />
-        <HorizontalLabelPositionBelowStepper />
+        <Stepper />
         </Route>
         <Route path="/signup">
         <SignUp />

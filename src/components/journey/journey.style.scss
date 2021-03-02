@@ -1,0 +1,26 @@
+.journey-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  .button-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 2em;
+
+    .descriptive-button:not(:first-child) {
+      padding-left: 10px;
+    }
+  }
+}
+
+

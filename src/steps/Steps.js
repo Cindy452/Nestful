@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
-import Stepper from '@material-ui/core/Stepper';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import useStyles from './styles';
 import Journey from '../components/journey/Journey';
 import Checklist from '../components/checklist/Checklist';
 import Results from '../components/Results';
+import './styles.scss';
 
 
 
@@ -28,8 +25,7 @@ function getStepContent(step) {
   }
 }
 
-export default function HorizontalLabelPositionBelowStepper() {
-  const classes = useStyles();
+export default function Stepper() {
   const [activeStep, setActiveStep] = useState(0);
   const steps = getSteps();
 
@@ -46,28 +42,20 @@ export default function HorizontalLabelPositionBelowStepper() {
   };
 
   return (
-    <div className={classes.root}>
-      <Stepper activeStep={activeStep} alternativeLabel>
-        {steps.map((label) => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
+    <div className='steps'>
       <div>
         {activeStep === steps.length ? (
           <div>
-            <Typography component="span" className={classes.instructions}>All steps completed</Typography>
+            <Typography component="span">All steps completed</Typography>
             <Button onClick={handleReset}>Reset</Button>
           </div>
         ) : (
           <div>
-            <Typography component="span" className={classes.instructions}>{getStepContent(activeStep)}</Typography>
+            <Typography component="span">{getStepContent(activeStep)}</Typography>
             <div>
               <Button
                 disabled={activeStep === 0}
                 onClick={handleBack}
-                className={classes.backButton}
               >
                 Back
               </Button>
