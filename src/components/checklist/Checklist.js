@@ -1,33 +1,51 @@
-import React from 'react';
-import useStyles from './checklist.style';
-import TextField from '@material-ui/core/TextField';
-import { FormGroup } from '@material-ui/core';
-
+import React from "react";
+import Input from "@material-ui/core/Input";
+import "./checklist.style.scss";
 
 export default function Checklist() {
-  const classes = useStyles();
-
   return (
-    <FormGroup className={classes.container} noValidate>
-     <label>Select your desired retirement date</label>
-      <TextField
-        id="date"
-        type="date"
-        defaultValue="2021-01-01"
-        className={classes.textField}
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
-    
-      <label>Enter how much money you currently make per year: </label>
-       <input type="number" id="annual-income" name="annual-income" />
-     <label>Enter how much money you have saved for retirement to date: </label>
-      <input type="number" id="saving" name="saving" /> 
- </FormGroup>
+    <div className="checklist-container">
+      <h1>Are you on track for retirement</h1>
+      <p>
+        Please fill in the blanks with your retirement asiprations and current
+        financial picture. Don't worry this stays between us
+      </p>
+      <div>
+        <span>
+          I am
+          <Input type="text" className="age" />
+          years old.
+        </span>
+        <span>
+          I want to retire when I am
+          <Input type="text" className="age" />
+          years old
+        </span>
+      </div>
+      <div>
+        <span>
+          I make
+          <span className="currencyinput">
+            <Input type="text" name="currency" defaultValue="$" />
+          </span>
+          per year.
+        </span>
+        <span>
+          I've saved
+          <span className="currencyinput" >
+            <Input type="text" name="currency" defaultValue="$" />
+          </span>
+          for retirement
+        </span>
+      </div>
+
+      <span>
+        I plan to save an aditional
+        <span className="currencyinput">
+          <Input type="text" name="currency" defaultValue="$" />
+        </span>
+        per month until I retire
+      </span>
+    </div>
   );
 }
-
-
-
-
