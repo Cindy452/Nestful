@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Journey from "../components/journey/Journey";
-import Checklist from "../components/checklist/Checklist";
-import Results from "../components/Results";
+import NotRetireChecklist from '../components/near-retire/checklist/NotRetireChecklist';
+import RetiredChecklist from '../components/retired/checklist/RetiredChecklist';
+import Results from "../components/results/Results";
 import "./styles.scss";
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Home from '../components/home/Home';
 
 function getSteps() {
   return ["Choose your journey", "Finish checklist", "Results"];
@@ -13,11 +15,15 @@ function getSteps() {
 
 function getStepContent(step) {
   switch (step) {
-    case 0:
-      return <Journey />;
+    case 0: 
+    return <Home />
     case 1:
-      return <Checklist />;
+      return <Journey />;
     case 2:
+      return <NotRetireChecklist />;
+      case 3:
+        return <RetiredChecklist />;
+    case 4:
       return <Results />;
     default:
       return "Unknown stepIndex";
@@ -36,16 +42,12 @@ export default function Stepper() {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
-  };
-
   return (
     <div className="steps">
         {activeStep === steps.length ? (
           <div>
-            <Typography component="span">All steps completed</Typography>
-            <Button onClick={handleReset}>Reset</Button>
+            <Typography component="span" href=''>All steps completed</Typography>
+            <Button href='/home'>Dashboard</Button>
           </div>
         ) : (
             <div>
@@ -73,7 +75,7 @@ export default function Stepper() {
                   className="continue"
                 >
                   <span>
-                    {activeStep === steps.length - 1 ? "Finish" : "Continue"}
+                    {activeStep === 0 ? "Let's get started" : steps.length - 1 ? "Continue" : "Finished" }
                   </span>
                 </Button>
                 <div className='spacer'></div>

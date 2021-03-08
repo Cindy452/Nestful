@@ -1,0 +1,21 @@
+h1 {
+  margin: 0;
+  text-align: center;
+}
+
+h2 {
+  margin: 0;
+  text-align: center;
+}
+
+.start-container {
+  margin: 20px;
+  }
+
+.image {
+  margin-left: 35%;
+
+  @media screen and (max-width: 640px) {
+    margin-left: 10%;
+  }
+}

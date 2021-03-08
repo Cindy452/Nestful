@@ -1,0 +1,18 @@
+.root {
+  flex-grow: 1;
+}
+
+.menu-button {
+  margin-right: 16px;
+}
+
+.title {
+  flex-grow: 1;
+  outline: none;
+}
+
+.link {
+  &:hover {
+    text-decoration: none;
+}
+}

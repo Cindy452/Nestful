@@ -1,6 +1,3 @@
-.currencyinput {
-  border: 1px inset #ccc;
-}
 .currencyinput input {
   border: 0;
 }
@@ -9,13 +6,14 @@
   text-align: center;
   word-spacing: 2px;
 
-  .age {
+  .year {
     display: inline-block;
     margin: 10px;
     border: 1px inset #ccc;
   }
 
   .currencyinput {
+    border: 1px inset #ccc;
     display: inline-block;
     margin: 10px;
   }

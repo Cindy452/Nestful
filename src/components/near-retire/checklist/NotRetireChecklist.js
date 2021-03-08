@@ -2,7 +2,7 @@ import React from "react";
 import Input from "@material-ui/core/Input";
 import "./checklist.style.scss";
 
-export default function Checklist() {
+export default function NotRetireChecklist() {
   return (
     <div className="checklist-container">
       <h1>Are you on track for retirement</h1>
