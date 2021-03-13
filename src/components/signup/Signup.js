@@ -117,7 +117,7 @@ function SignUp() {
                 required
                 fullWidth
                 type="password"
-                placeholder="Confirm password"
+                label="Confirm password"
                 onChange={(e) => setPasswordCheck(e.target.value)}
               />
             </Grid>

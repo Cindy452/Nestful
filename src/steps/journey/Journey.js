@@ -4,7 +4,7 @@ import Logo1 from "../../assets/undraw_To_do_list.svg";
 import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 const styles = (theme) => ({
   
@@ -13,8 +13,6 @@ const styles = (theme) => ({
 
 
 const Journey = withStyles(styles)(({ classes, handleSelection}) =>{
-
-  //const [isRetired, setIsRetired] = useState(false);
 
   return (
     <div className="journey">
@@ -45,9 +43,8 @@ const Journey = withStyles(styles)(({ classes, handleSelection}) =>{
             className="descriptive-button"
             icon={Logo2}
             label="Retired"
-            description="You need help tracking your nest egg."
-          />
-        </Grid>
+            description="You need help tracking your nest egg." />
+           </Grid>
       </Grid>
     </div>
   );
