@@ -1,4 +1,8 @@
-import React, { Component } from "react";
+import React, { useState, useContext } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
+import UserContext from "../context/userContext";
+import ErrorNotice from "../../components/misc/ErrorNotice";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -26,142 +30,127 @@ function Copyright() {
   );
 }
 
+function SignUp() {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [passwordCheck, setPasswordCheck] = useState();
+  const [displayName, setDisplayName] = useState();
+  const [error, setError] = useState();
 
-class SignUp extends Component {
-  constructor() {
-    super();
-    this.state = {
-      name: "",
-      email: "",
-      password: "",
-      password_confirmation: "",
-      errors: {},
-    };
-  }
-  onChange = (e) => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
-  onSubmit = (e) => {
+  const { setUserData } = useContext(UserContext);
+  const history = useHistory();
+
+  const submit = async (e) => {
     e.preventDefault();
-    const newUser = {
-      name: this.state.name,
-      email: this.state.email,
-      password: this.state.password,
-      password_confirmation: this.state.password_confirmation,
-      errors: {}
-    };
-    console.log(newUser);
-  };
-  render() {
-  const { errors } = this.state;
 
-    return (
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <div className='paper'>
-          <Avatar className='avatar'>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Get started with Nestful
-          </Typography>
-          <form className='form' noValidate>
-            <Grid container spacing={2}>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="name"
-                  name="name"
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="name"
-                  label="Name"
-                  autoFocus
-                  onChange={this.onChange}
-                  value={this.state.name}
-                  type='text'
-                  error={errors.name}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  type='email'
-                  error={errors.email}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  id="password"
-                  autoComplete="current-password"
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  variant="outlined"
-                  required
-                  fullWidth
-                  name="password_confirmation"
-                  label="Confirm Password"
-                  type="password"
-                  onChange={this.onChange}
-                  value={this.state.password_confirmation}
-                  error={errors.password_confirmation}
-                  id="password_confirmation"
-                  autoComplete="current-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive notification and updates via email."
-                />
-              </Grid>
+    try {
+      const newUser = { email, password, passwordCheck, displayName };
+      await axios.post("http://localhost:5000/users/register", newUser);
+      const loginResponse = await axios.post(
+        "http://localhost:5000/users/login",
+        {
+          email,
+          password,
+        }
+      );
+      setUserData({
+        token: loginResponse.data.token,
+        user: loginResponse.data.user,
+      });
+      localStorage.setItem("auth-token", loginResponse.data.token);
+      history.push("/");
+    } catch (err) {
+      err.response.data.msg && setError(err.response.data.msg);
+    }
+  };
+  return (
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
+      <div className="paper">
+        <Avatar className="avatar">
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography component="h1" variant="h5">
+          Get started with Nestful
+        </Typography>
+        {error && (
+        <ErrorNotice message={error} clearError={() => setError(undefined)} />
+      )}
+        <form onSubmit={submit} className="form">
+          <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                type="text"
+                label="Name"
+                id="dsplay-name"
+                onChange={(e) => setDisplayName(e.target.value)}
+              />
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className='submit'
-              href="/calendar"
-            >
-              Sign Up
-            </Button>
-            <Grid container justify="center">
-              <Grid item>
-                <Link href="/signin" variant="body2" >
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
+            <Grid item xs={12}>
+              <TextField
+                type="email"
+                id="email"
+                variant="outlined"
+                required
+                fullWidth
+                label="Email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </Grid>
-          </form>
-        </div>
-        <Box mt={5}>
-          <Copyright />
-        </Box>
-      </Container>
-    );
-  }
+            <Grid item xs={12}>
+              <TextField
+                type="password"
+                id="password"
+                variant="outlined"
+                label="Password"
+                required
+                fullWidth
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
+                variant="outlined"
+                required
+                fullWidth
+                type="password"
+                placeholder="Confirm password"
+                onChange={(e) => setPasswordCheck(e.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControlLabel
+                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                label="I want to receive notification and updates via email."
+              />
+            </Grid>
+          </Grid>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className="submit"
+          >
+            Sign Up
+          </Button>
+          <Grid container justify="center">
+            <Grid item>
+              <Link href="/signin" variant="body2">
+                Already have an account? Sign in
+              </Link>
+            </Grid>
+          </Grid>
+        </form>
+      </div>
+      <Box mt={5}>
+        <Copyright />
+      </Box>
+    </Container>
+  );
 }
 
 export default SignUp;

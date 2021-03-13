@@ -1,0 +1,32 @@
+.egg-container {
+  padding-bottom: 10px;
+  .egg {
+    width: 140px;
+    height: 200px;
+    margin: 1em auto;
+    border-radius: 50%/60% 60% 40% 40%;
+    overflow: hidden;
+    display: flex;
+    background-color: #f0ead6;
+    animation: egg-animation 0.8s linear 0s infinite alternate;
+    align-items: center;
+    justify-content: center;
+
+    .egg-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      //background-color: #F0EAD6;
+    }
+  }
+
+  @keyframes egg-animation {
+    0% {
+      transform: rotate(-6deg) scale(1);
+    }
+    100% {
+      transform: rotate(6deg) scale(1.2);
+    }
+  }
+}
