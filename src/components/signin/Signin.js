@@ -9,29 +9,42 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 import "./signin.style.scss";
+import { withStyles } from "@material-ui/core/styles";
+import { Link as RouterLink} from 'react-router-dom';
+import MaterialLink from '@material-ui/core/link';
 
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        Nestful
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
-function Signin() {
+const styles = (theme) => ({
+ link: {
+    "&:hover, &:focus": {
+      textDecoration: "none",
+    },
+  }
+});
+
+
+
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {"Copyright © "}
+//       <RouterLink to='/'>
+//         Nestful
+//       </RouterLink>{" "}
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
+
+const Signin = withStyles(styles)(({ classes }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState();
@@ -44,7 +57,7 @@ function Signin() {
     try {
       const loginUser = { email, password };
       const loginResponse = await axios.post(
-        "http://localhost:5000/users/login",
+        "https://nestful-api.herokuapp.com/users/login",
         loginUser
       );
       setUserData({
@@ -52,7 +65,7 @@ function Signin() {
         user: loginResponse.data.user,
       });
       localStorage.setItem("auth-token", loginResponse.data.token);
-      history.push("/");
+      history.push("/welcome");
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
     }
@@ -110,18 +123,19 @@ function Signin() {
           </Button>
           <Grid container justify="center">
             <Grid item>
-              <Link href="/signup" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <MaterialLink variant="body2" component={RouterLink} to='/signup'>
+              Don't have an account? Sign Up
+              </MaterialLink>
+      
             </Grid>
           </Grid>
         </form>
       </div>
       <Box mt={8}>
-        <Copyright />
+        {/* <Copyright /> */}
       </Box>
     </Container>
   );
-}
+});
 
 export default Signin;

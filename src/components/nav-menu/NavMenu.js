@@ -2,8 +2,9 @@ import React from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 import { withStyles } from "@material-ui/core/styles";
+import { Link as RouterLink } from "react-router-dom";
+import MaterialLink from "@material-ui/core/link";
 
 const styles = (theme) => ({
   root: {
@@ -37,23 +38,42 @@ const NavMenuComponent = withStyles(styles)(({ classes }) => {
     <div className={classes.root}>
       <AppBar position="static" color="secondary">
         <Toolbar>
-          <Typography variant="h3" className={classes.title} color="textSecondary">
-            <Link color="inherit" href="/" className={`${classes.link} ${classes.branding}`}>
+          <Typography
+            variant="h3"
+            className={classes.title}
+            color="textSecondary"
+          >
+            <MaterialLink
+              color="inherit"
+              className={`${classes.link} ${classes.branding}`}
+              component={RouterLink}
+              to="/"
+            >
               Nestful
-            </Link>
+            </MaterialLink>
           </Typography>
 
           <div className={classes.menuLinks}>
             <Typography variant="button" color="textSecondary">
-              <Link color="inherit" className={classes.link} href="/signin">
+              <MaterialLink
+                color="inherit"
+                className={classes.link}
+                component={RouterLink}
+                to="/signin"
+              >
                 Sign In
-              </Link>
+              </MaterialLink>
             </Typography>
 
             <Typography variant="button" color="textSecondary">
-              <Link color="inherit" className={classes.link} href="/signup">
+              <MaterialLink
+                color="inherit"
+                className={classes.link}
+                component={RouterLink}
+                to="/signup"
+              >
                 Sign Up
-              </Link>
+              </MaterialLink>
             </Typography>
           </div>
         </Toolbar>

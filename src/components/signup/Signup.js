@@ -9,26 +9,27 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import "./signup.style.scss";
 import Container from "@material-ui/core/Container";
+import { Link as RouterLink } from "react-router-dom";
+import MaterialLink from "@material-ui/core/link";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="/">
-        Nestful
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+// function Copyright() {
+//   return (
+//     <Typography variant="body2" color="textSecondary" align="center">
+//       {"Copyright © "}
+//       <RouterLink to='/'>
+//         Nestful
+//       </RouterLink>{" "}
+//       {new Date().getFullYear()}
+//       {"."}
+//     </Typography>
+//   );
+// }
 
 function SignUp() {
   const [email, setEmail] = useState();
@@ -45,9 +46,12 @@ function SignUp() {
 
     try {
       const newUser = { email, password, passwordCheck, displayName };
-      await axios.post("http://localhost:5000/users/register", newUser);
+      await axios.post(
+        "https://nestful-api.herokuapp.com/users/register",
+        newUser
+      );
       const loginResponse = await axios.post(
-        "http://localhost:5000/users/login",
+        "https://nestful-api.herokuapp.com/users/login",
         {
           email,
           password,
@@ -58,7 +62,7 @@ function SignUp() {
         user: loginResponse.data.user,
       });
       localStorage.setItem("auth-token", loginResponse.data.token);
-      history.push("/");
+      history.push("/welcome");
     } catch (err) {
       err.response.data.msg && setError(err.response.data.msg);
     }
@@ -74,8 +78,8 @@ function SignUp() {
           Get started with Nestful
         </Typography>
         {error && (
-        <ErrorNotice message={error} clearError={() => setError(undefined)} />
-      )}
+          <ErrorNotice message={error} clearError={() => setError(undefined)} />
+        )}
         <form onSubmit={submit} className="form">
           <Grid container spacing={2}>
             <Grid item xs={12}>
@@ -139,16 +143,14 @@ function SignUp() {
           </Button>
           <Grid container justify="center">
             <Grid item>
-              <Link href="/signin" variant="body2">
+              <MaterialLink variant="body2" component={RouterLink} to="/signin">
                 Already have an account? Sign in
-              </Link>
+              </MaterialLink>
             </Grid>
           </Grid>
         </form>
       </div>
-      <Box mt={5}>
-        <Copyright />
-      </Box>
+      <Box mt={5}>{/* <Copyright /> */}</Box>
     </Container>
   );
 }

@@ -5,7 +5,7 @@ import Journey from "./journey/Journey";
 import Results from "./results/Results";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Home from "./home/Home";
-import BasicInfoRetired from "./basic-info/BasicInfoNotRetired";
+import BasicInfoRetired from "./basic-info/BasicInfoRetired";
 import BasicInfoNotRetired from "./basic-info/BasicInfoNotRetired";
 import SignUp from "../components/signup/Signup";
 import Fab from "@material-ui/core/Fab";
@@ -39,26 +39,30 @@ const styles = (theme) => ({
   }
 });
 
-const getStepContent = (step) => {
-
-  switch (step) {
-    case 0:
-      return <Home />;
-    case 1:
-      return <Journey/>;
-    case 2:
-      return false ? (<BasicInfoRetired />) : (<BasicInfoNotRetired />);
-    case 3:
-      return <Results />;
-    default:
-      return "Unknown stepIndex";
-  }
-}
 
 const Stepper = withStyles(styles)(({ classes }) => {
+
   const [activeStep, setActiveStep] = useState(0);
 
   const steps = ["Home", "Choose your journey", "Basic Info", "Results"];
+
+  const [isRetired, setIsRetired] = useState(null);
+
+
+  const getStepContent = (step) => {
+    switch (step) {
+      case 0:
+        return <Home />;
+      case 1:
+        return <Journey  handleSelection={handleSelection} />;
+      case 2:
+        return isRetired ? (<BasicInfoRetired />) : (<BasicInfoNotRetired />);
+      case 3:
+        return <Results />;
+      default:
+        return "Unknown stepIndex";
+    }
+  }
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -67,6 +71,10 @@ const Stepper = withStyles(styles)(({ classes }) => {
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
+
+  const handleSelection = (isRetired) => {
+    setIsRetired(isRetired);
+  }
 
   return (
     <Container className={classes.container}>
@@ -78,7 +86,6 @@ const Stepper = withStyles(styles)(({ classes }) => {
         <Box className="step">
           {getStepContent(activeStep)}
 
-          <div></div>
 
           <Grid
             className={classes.buttonGrid}
@@ -102,6 +109,7 @@ const Stepper = withStyles(styles)(({ classes }) => {
                 variant="contained"
                 color="primary"
                 size="large"
+                disabled={activeStep === 1 && isRetired === null}
                 onClick={handleNext}
                 className={classes.continue}
               >

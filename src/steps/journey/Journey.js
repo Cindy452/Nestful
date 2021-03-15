@@ -13,7 +13,6 @@ const styles = (theme) => ({
 
 
 const Journey = withStyles(styles)(({ classes, handleSelection}) =>{
-
   return (
     <div className="journey">
       <Typography variant="h4" color="textPrimary" gutterBottom align="center">
@@ -29,7 +28,8 @@ const Journey = withStyles(styles)(({ classes, handleSelection}) =>{
       >
         <Grid item>
           <DescriptiveButton
-            onClick={() => {handleSelection(false)}}
+         onClick={() => {handleSelection(false) }}  
+          
             className="descriptive-button"
             icon={Logo1}
             label="Not Yet Retired"
@@ -39,7 +39,7 @@ const Journey = withStyles(styles)(({ classes, handleSelection}) =>{
 
         <Grid item  >
           <DescriptiveButton
-            onClick={() => {handleSelection(true)}}
+            onClick={() =>  {handleSelection(true)}}
             className="descriptive-button"
             icon={Logo2}
             label="Retired"

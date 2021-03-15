@@ -15,51 +15,40 @@ const styles = (theme) => ({
     alignContent: "space-between",
     background: theme.palette.primary.main,
 
-    '& img': {
+    "& img": {
       maxHeight: "100px",
-      padding: "15px"
+      padding: "15px",
     },
 
-    '& span': {
+    "& span": {
       fontSize: "24px",
-       paddingBottom: "0.75em"
-    }
+      paddingBottom: "0.75em",
+    },
   },
 
   clicked: {
     border: "3px solid",
     borderColor: theme.palette.secondary.main,
-  }
-  
- 
+  },
 });
 
+const DescriptiveButton = withStyles(styles)(
+  ({ classes, label, description, icon, onClick }) => {
+    return (
+      <ButtonBase
+        focusRipple
+        className={classes.discriptiveButtonRoot}
+        onClick={onClick}
+      >
+        <img src={icon} alt={label} />
+        <Typography color="textSecondary">
+          <span>{label}</span>
+        </Typography>
 
-
-const onClick = () => {
-  
-  console.log('click')
-};
-
-const DescriptiveButton = withStyles(styles)(({classes, label, description, icon }) => {
-
-  return (
-
-      <ButtonBase focusRipple className={classes.discriptiveButtonRoot}>
-
-          <img src={icon} alt={label} />
-          <Typography color="textSecondary">
-            <span>{label}</span>
-          </Typography>
-
-          <Typography color="textSecondary">
-            {description}
-          </Typography>
-
-
+        <Typography color="textSecondary">{description}</Typography>
       </ButtonBase>
-
-  );
-});
+    );
+  }
+);
 
 export default DescriptiveButton;

@@ -9,12 +9,10 @@ import {
   Route,
   BrowserRouter,
 } from "react-router-dom";
-import ChoseDate from "./components/calendar/Calendar";
-import Results from "./steps/results/Results";
 import UserContext from "./components/context/userContext";
-import Welcome from "./components/welcome/Welcome";
 import Stepper from "./steps/Stepper";
 import { withStyles } from "@material-ui/core/styles";
+import Welcome from './components/welcome/Welcome';
 
 const styles = (theme) => ({});
 
@@ -24,31 +22,31 @@ const App = withStyles(styles)(({ classes }) => {
     user: undefined,
   });
 
-  // useEffect(() => {
-  //   const checkLoggedIn = async () => {
-  //     let token = localStorage.getItem("auth-token");
-  //     if (token === null) {
-  //       localStorage.setItem("auth-token", "");
-  //       token = "";
-  //     }
-  //     const tokenResponse = await axios.post(
-  //       "http://localhost:5000/users/tokenIsValid",
-  //       null,
-  //       { headers: { "x-auth-token": token } }
-  //     );
-  //     if (tokenResponse.data) {
-  //       const userRes = await axios.get("http://localhost:5000/users/", {
-  //         headers: { "x-auth-token": token },
-  //       });
-  //       setUserData({
-  //         token,
-  //         user: userRes.data,
-  //       });
-  //     }
-  //   };
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      let token = localStorage.getItem("auth-token");
+      if (token === null) {
+        localStorage.setItem("auth-token", "");
+        token = "";
+      }
+      const tokenResponse = await axios.post(
+        "https://nestful-api.herokuapp.com/users/tokenIsValid",
+        null,
+        { headers: { "x-auth-token": token } }
+      );
+      if (tokenResponse.data) {
+        const userRes = await axios.get("https://nestful-api.herokuapp.com/users/", {
+          headers: { "x-auth-token": token },
+        });
+        setUserData({
+          token,
+          user: userRes.data,
+        });
+      }
+    };
 
-  //   checkLoggedIn();
-  // }, []);
+    checkLoggedIn();
+  }, []);
 
   return (
     <BrowserRouter>
@@ -62,13 +60,12 @@ const App = withStyles(styles)(({ classes }) => {
             <Route path="/signup">
               <SignUp />
             </Route>
-            <Route path="/calendar">
-              <ChoseDate />
-            </Route>
             <Route path="/signin">
               <SignIn />
             </Route>
-            <Results />
+            <Route path="/welcome">
+            <Welcome />
+          </Route>
           </Switch>
         </Router>
       </UserContext.Provider>
