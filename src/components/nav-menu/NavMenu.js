@@ -5,6 +5,8 @@ import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import { Link as RouterLink } from "react-router-dom";
 import MaterialLink from "@material-ui/core/link";
+import EggLogo from "../../assets/nestegg.svg";
+import { Box } from "@material-ui/core";
 
 const styles = (theme) => ({
   root: {
@@ -18,8 +20,15 @@ const styles = (theme) => ({
   },
 
   title: {
-    flexGrow: 1,
+    display: "flex",
+    alignItems: "center",
     outline: "none",
+    justifyContent: "space-between"
+  },
+
+  logo: {
+    display: "flex",
+    alignItems: "center",
   },
 
   branding: {
@@ -33,53 +42,42 @@ const styles = (theme) => ({
   },
 });
 
-const NavMenuComponent = withStyles(styles)(({ classes }) => {
-  return (
-    <div className={classes.root}>
-      <AppBar position="static" color="secondary">
-        <Toolbar>
-          <Typography
-            variant="h3"
-            className={classes.title}
-            color="textSecondary"
-          >
-            <MaterialLink
-              color="inherit"
-              className={`${classes.link} ${classes.branding}`}
-              component={RouterLink}
-              to="/"
-            >
-              Nestful
-            </MaterialLink>
-          </Typography>
+const NavMenuComponent = withStyles(styles)(
+  ({ classes, activeStep, showSteps, totalSteps }) => {
+    return (
+      <div className={classes.root}>
+        <AppBar position="static" color="secondary">
+          <Toolbar className={classes.title}>
+            <Box className={classes.logo}>
+              <img
+                src={EggLogo}
+                alt="Egg Logo"
+                style={{ maxHeight: 80, padding: 10 }}
+              />
+              <Typography variant="h3" color="textSecondary">
+                <MaterialLink
+                  color="inherit"
+                  className={`${classes.link} ${classes.branding}`}
+                  component={RouterLink}
+                  to="/"
+                >
+                  Nestful
+                </MaterialLink>
+              </Typography>
+            </Box>
 
-          <div className={classes.menuLinks}>
-            <Typography variant="button" color="textSecondary">
-              <MaterialLink
-                color="inherit"
-                className={classes.link}
-                component={RouterLink}
-                to="/signin"
-              >
-                Sign In
-              </MaterialLink>
+            <Typography variant="h5" className={classes.status}>
+              {showSteps
+                ? `Check In: Step ${activeStep + 1} of ${totalSteps}`
+                : null}
             </Typography>
 
-            <Typography variant="button" color="textSecondary">
-              <MaterialLink
-                color="inherit"
-                className={classes.link}
-                component={RouterLink}
-                to="/signup"
-              >
-                Sign Up
-              </MaterialLink>
-            </Typography>
-          </div>
-        </Toolbar>
-      </AppBar>
-    </div>
-  );
-});
+            <Box></Box>
+          </Toolbar>
+        </AppBar>
+      </div>
+    );
+  }
+);
 
 export default NavMenuComponent;

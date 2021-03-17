@@ -16,7 +16,9 @@ const styles = (theme) => ({
     alignItems: "center",
     paddingRight: "4px",
     justifyContent: "center",
-    whiteSpace: "nowrap"
+    whiteSpace: "nowrap",
+    fontSize: 'large',
+    margin: 10
   },
 
   startIn: {
@@ -40,12 +42,11 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
   return (
     <div>
       <Typography variant="h4" color="textPrimary" gutterBottom align="center">
-        A Quick Retirement Nest Egg Check
+       Let's see if your nest egg is still on track
       </Typography>
 
       <Typography variant="h5" color="textPrimary" gutterBottom align="center">
-        Please fill in the blanks with your retirement nest eggs and spending
-        habits. Don't worry this stays between us
+        Please fill in the fields below to see if you're still on track. Don't worry this stays between us
       </Typography>
 
      
@@ -53,7 +54,7 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
           <Grid container justify="center" alignItems="center">
             <Grid item md={6}>
               <div className={classes.question}>
-                I want my nest egg to start in
+               I have $
                 <TextField
                 autoFocus
                   type="text"
@@ -61,13 +62,13 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
                   color="primary"
                   multiline={false}
                 />
-                more years.
+             in my nest egg.
               </div>
             </Grid>
 
             <Grid item>
               <div className={classes.question}>
-                I have
+                I spend $
                 <TextField
                   type="text"
                   className={`${classes.textField} ${classes.savings}`}
@@ -77,13 +78,13 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
                   color="primary"
                   multiline={false}
                 />
-                saved for retirement.
+               per month.
               </div>
             </Grid>
 
             <Grid item>
               <div className={classes.question}>
-                I spend about
+                I receive of total of $
                 <TextField
                   className={`${classes.textField} ${classes.spending}`}
                   color="primary"
@@ -92,7 +93,7 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
                     <InputAdornment position="start">$</InputAdornment>
                   }
                 />
-                per month.
+                per month from my company and /or government pensions plans(excluding RRSP withdrawals).
               </div>
             </Grid>
           </Grid>

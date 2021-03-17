@@ -4,7 +4,7 @@ import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = (theme) => ({
-  discriptiveButtonRoot: {
+  descriptiveButtonRoot: {
     margin: "10px",
     display: "flex",
     flexDirection: "column",
@@ -24,6 +24,9 @@ const styles = (theme) => ({
       fontSize: "24px",
       paddingBottom: "0.75em",
     },
+    "&.selected": {
+      border: "2px solid red"
+    },
   },
 
   clicked: {
@@ -33,11 +36,11 @@ const styles = (theme) => ({
 });
 
 const DescriptiveButton = withStyles(styles)(
-  ({ classes, label, description, icon, onClick }) => {
+  ({ classes, label, description, icon, onClick,  }) => {
     return (
       <ButtonBase
         focusRipple
-        className={classes.discriptiveButtonRoot}
+        className={classes.descriptiveButtonRoot}
         onClick={onClick}
       >
         <img src={icon} alt={label} />

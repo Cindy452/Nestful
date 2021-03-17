@@ -8,7 +8,7 @@ export const theme = createMuiTheme({
     },
 
     "background": {
-      "default": "#E4FDE1", //Green
+      "default": "#F1F8F0",
       "paper": "#54878D"
     },
     "primary": {

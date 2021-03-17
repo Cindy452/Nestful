@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Journey from "./journey/Journey";
-import Results from "./results/Results";
+import NotRetiredResult from './results/NotRetiredResult';
+import RetiredResult from './results/RetiredResult';
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Home from "./home/Home";
 import BasicInfoRetired from "./basic-info/BasicInfoRetired";
 import BasicInfoNotRetired from "./basic-info/BasicInfoNotRetired";
-import SignUp from "../components/signup/Signup";
 import Fab from "@material-ui/core/Fab";
 import { Container } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
@@ -40,13 +40,16 @@ const styles = (theme) => ({
 });
 
 
-const Stepper = withStyles(styles)(({ classes }) => {
+
+const Stepper = withStyles(styles)(({ classes, onStepChange }) => {
 
   const [activeStep, setActiveStep] = useState(0);
 
-  const steps = ["Home", "Choose your journey", "Basic Info", "Results"];
+  const steps = ["Home", "Choose your journey", "Basic Info"];
 
   const [isRetired, setIsRetired] = useState(null);
+
+  
 
 
   const getStepContent = (step) => {
@@ -54,11 +57,9 @@ const Stepper = withStyles(styles)(({ classes }) => {
       case 0:
         return <Home />;
       case 1:
-        return <Journey  handleSelection={handleSelection} />;
+        return <Journey  handleSelection={handleSelection} isRetired={isRetired} />;
       case 2:
         return isRetired ? (<BasicInfoRetired />) : (<BasicInfoNotRetired />);
-      case 3:
-        return <Results />;
       default:
         return "Unknown stepIndex";
     }
@@ -66,10 +67,12 @@ const Stepper = withStyles(styles)(({ classes }) => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    onStepChange(activeStep);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    onStepChange(activeStep);
   };
 
   const handleSelection = (isRetired) => {
@@ -80,7 +83,7 @@ const Stepper = withStyles(styles)(({ classes }) => {
     <Container className={classes.container}>
       {activeStep === steps.length ? (
         <Box className="step">
-          <SignUp />
+        {isRetired ? (<RetiredResult />) : (<NotRetiredResult />)}
         </Box>
       ) : (
         <Box className="step">

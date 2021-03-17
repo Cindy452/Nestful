@@ -17,6 +17,8 @@ const styles = (theme) => ({
     paddingRight: "4px",
     justifyContent: "center",
     whiteSpace: "nowrap",
+    fontSize: 'large',
+    margin: 10
   },
 
   age: {
@@ -34,11 +36,10 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
   return (
     <div>
       <Typography variant="h4" color="textPrimary" gutterBottom align="center">
-        Are you on track for retirement
+        Let's see if you're on track to retire soon
       </Typography>
       <Typography variant="h5" color="textPrimary" gutterBottom align="center">
-        Please fill in the blanks with your retirement asiprations and current
-        financial picture. Don't worry this stays between us
+        Please fill in the blanks to see if you're on track. Don't worry this stays between us
       </Typography>
 
       
@@ -68,13 +69,13 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
                   color="primary"
                   multiline={false}
                 />
-                years old
+                years old.
               </div>
             </Grid>
 
             <Grid item>
               <div className={classes.question}>
-              I make
+              I make $
                 <TextField
                   autoFocus
                   type="text"
@@ -88,7 +89,7 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
 
             <Grid item>
               <div className={classes.question}>
-              I've saved
+              I've saved $
                 <TextField
                   autoFocus
                   type="text"
@@ -96,13 +97,13 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
                   color="primary"
                   multiline={false}
                 />
-                for retirement
+                for retirement.
               </div>
             </Grid>
 
             <Grid item>
               <div className={classes.question}>
-              I plan to save an aditional
+              I plan to save an aditional $
                 <TextField
                   autoFocus
                   type="text"
@@ -110,7 +111,7 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
                   color="primary"
                   multiline={false}
                 />
-                per month until I retire
+                per month until I retire.
               </div>
             </Grid>
           </Grid>
