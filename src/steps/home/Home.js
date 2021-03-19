@@ -18,6 +18,7 @@ const styles = (theme) => ({
 });
 
 const Home = withStyles(styles)(({ classes }) => {
+
   return (
     <div>
       <div className={classes.homeRoot}>

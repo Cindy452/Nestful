@@ -22,13 +22,7 @@ const App = withStyles(styles)(({ classes }) => {
     user: undefined,
   });
 
-  const [activeStep, setActiveStep] = useState(-1);
-  const [showSteps, setShowSteps] = useState(true);
-  const [totalSteps, setTotalSteps] = useState(3);
-
-  const onStepChange = (activeStep) => {
-    setActiveStep(activeStep)
-  }
+  const [currentTitle, setCurrentTitle] = useState("");
 
   useEffect(() => {
     const checkLoggedIn = async () => {
@@ -63,22 +57,19 @@ const App = withStyles(styles)(({ classes }) => {
     <BrowserRouter>
       <UserContext.Provider value={{ userData, setUserData }}>
         <Router>
-        <NavMenu activeStep={activeStep} showSteps={showSteps} totalSteps={totalSteps}/>
+          <NavMenu currentTitle={currentTitle} />
           <Switch>
-          <Route exact path="/">
-              <Stepper onStepChange={onStepChange} />
-            </Route>
-            <Route exact path="/checkin">
-              <Stepper onStepChange={onStepChange} />
+            <Route exact path="/">
+              <Stepper setCurrentTitle={setCurrentTitle} />
             </Route>
             <Route path="/signup">
-              <SignUp />
+              <SignUp setCurrentTitle={setCurrentTitle} />
             </Route>
             <Route path="/signin">
-              <SignIn />
+              <SignIn setCurrentTitle={setCurrentTitle}  />
             </Route>
             <Route path="/welcome">
-              <Welcome />
+              <Welcome setCurrentTitle={setCurrentTitle}  />
             </Route>
           </Switch>
         </Router>

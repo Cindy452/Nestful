@@ -31,7 +31,7 @@ import MaterialLink from "@material-ui/core/link";
 //   );
 // }
 
-function SignUp() {
+function SignUp({setCurrentTitle}) {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [passwordCheck, setPasswordCheck] = useState();
@@ -67,6 +67,8 @@ function SignUp() {
       err.response.data.msg && setError(err.response.data.msg);
     }
   };
+
+  setCurrentTitle('');
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { useHistory, Link } from 'react-router-dom';
 import UserContext from '../context/userContext';
 
-function Welcome () {
+function Welcome ({setCurrentTitle}) {
     const {userData} = useContext(UserContext);
     const history = useHistory();
    
@@ -11,6 +11,9 @@ function Welcome () {
             history.push("/signin");
 
     }, []);
+
+     setCurrentTitle('')
+
     return (
         <div>
             {userData.user ? (

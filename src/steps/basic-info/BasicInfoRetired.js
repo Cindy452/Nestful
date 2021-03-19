@@ -6,9 +6,10 @@ import Grid from "@material-ui/core/Grid";
 import FormControl from '@material-ui/core/FormControl';
 
 const styles = (theme) => ({
+
   textField: {
     paddingLeft: "8px",
-    paddingRight: "8px",
+    paddingRight: "8px"
   },
 
   question: {
@@ -20,22 +21,6 @@ const styles = (theme) => ({
     fontSize: 'large',
     margin: 10
   },
-
-  startIn: {
-    maxWidth: "60px",
-    
-    '& input': {
-      textAlign: "center"
-    }
-  },
-
-  savings: {
-    maxWidth: "160px"
-  },
-
-  spending: {
-    maxWidth: "160px"
-  }
 });
 
 const BasicInfoRetired = withStyles(styles)(({ classes }) => {
@@ -58,9 +43,11 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
                 <TextField
                 autoFocus
                   type="text"
-                  className={`${classes.textField} ${classes.startIn}`}
+                  className={classes.textField}
                   color="primary"
                   multiline={false}
+                  id="filled-basic" 
+                  variant="filled" 
                 />
              in my nest egg.
               </div>
@@ -71,12 +58,14 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
                 I spend $
                 <TextField
                   type="text"
-                  className={`${classes.textField} ${classes.savings}`}
+                  className={`${classes.textField}`}
                   startAdornment={
                     <InputAdornment position="start">$</InputAdornment>
                   }
                   color="primary"
                   multiline={false}
+                  id="filled-basic" 
+                  variant="filled" 
                 />
                per month.
               </div>
@@ -86,12 +75,14 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
               <div className={classes.question}>
                 I receive of total of $
                 <TextField
-                  className={`${classes.textField} ${classes.spending}`}
+                  className={`${classes.textField}`}
                   color="primary"
                   multiline={false}
                   startAdornment={
                     <InputAdornment position="start">$</InputAdornment>
                   }
+                  id="filled-basic" 
+                  variant="filled" 
                 />
                 per month from my company and /or government pensions plans(excluding RRSP withdrawals).
               </div>

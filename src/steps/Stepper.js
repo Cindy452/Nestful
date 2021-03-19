@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Journey from "./journey/Journey";
-import NotRetiredResult from './results/NotRetiredResult';
-import RetiredResult from './results/RetiredResult';
+import NotRetiredResult from "./results/NotRetiredResult";
+import RetiredResult from "./results/RetiredResult";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Home from "./home/Home";
 import BasicInfoRetired from "./basic-info/BasicInfoRetired";
@@ -12,7 +12,7 @@ import Fab from "@material-ui/core/Fab";
 import { Container } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import { withStyles } from "@material-ui/core/styles";
-import Box from '@material-ui/core/Box';
+import Box from "@material-ui/core/Box";
 
 const styles = (theme) => ({
   container: {
@@ -20,75 +20,77 @@ const styles = (theme) => ({
     justifyContent: "center",
     paddingTop: "40px",
     paddingBottom: "40px",
-    height: "calc(100vh - 64px)"
+    height: "calc(100vh - 64px)",
   },
 
   buttonGrid: {
-    padding:"20px"
+    padding: "20px",
   },
 
   previous: {
     height: "48px",
-    width: "48px"
+    width: "48px",
   },
 
   continue: {
     borderRadius: "25px",
     height: "48px",
-    width: "100%"
-  }
+    width: "100%",
+  },
 });
 
-
-
-const Stepper = withStyles(styles)(({ classes, onStepChange }) => {
-
+const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
   const [activeStep, setActiveStep] = useState(0);
 
   const steps = ["Home", "Choose your journey", "Basic Info"];
 
   const [isRetired, setIsRetired] = useState(null);
 
-  
-
+  useMemo(() => { 
+    if(activeStep > 0) {
+      setCurrentTitle(`Check In: Step ${activeStep} of ${steps.length}`);
+    }else {
+      setCurrentTitle('');
+    }
+   
+  }, [activeStep]);
 
   const getStepContent = (step) => {
     switch (step) {
       case 0:
-        return <Home />;
+        return <Home  />;
       case 1:
-        return <Journey  handleSelection={handleSelection} isRetired={isRetired} />;
+        return (
+          <Journey handleSelection={handleSelection} isRetired={isRetired} />
+        );
       case 2:
-        return isRetired ? (<BasicInfoRetired />) : (<BasicInfoNotRetired />);
+        return isRetired ? <BasicInfoRetired /> : <BasicInfoNotRetired />;
       default:
         return "Unknown stepIndex";
     }
-  }
+  };
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    onStepChange(activeStep);
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    onStepChange(activeStep);
   };
 
   const handleSelection = (isRetired) => {
     setIsRetired(isRetired);
-  }
+  };
 
   return (
     <Container className={classes.container}>
       {activeStep === steps.length ? (
         <Box className="step">
-        {isRetired ? (<RetiredResult />) : (<NotRetiredResult />)}
+          {isRetired ? <RetiredResult /> : <NotRetiredResult />}
         </Box>
       ) : (
         <Box className="step">
           {getStepContent(activeStep)}
-
 
           <Grid
             className={classes.buttonGrid}
@@ -125,8 +127,7 @@ const Stepper = withStyles(styles)(({ classes, onStepChange }) => {
                 </Typography>
               </Button>
             </Grid>
-            <Grid item xs={3} hidden={activeStep === 0}>
-            </Grid>
+            <Grid item xs={3} hidden={activeStep === 0}></Grid>
           </Grid>
         </Box>
       )}

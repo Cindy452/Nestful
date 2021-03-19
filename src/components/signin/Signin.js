@@ -44,7 +44,7 @@ const styles = (theme) => ({
 //   );
 // }
 
-const Signin = withStyles(styles)(({ classes }) => {
+const Signin = withStyles(styles)(({ classes, setCurrentTitle }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [error, setError] = useState();
@@ -70,6 +70,8 @@ const Signin = withStyles(styles)(({ classes }) => {
       err.response.data.msg && setError(err.response.data.msg);
     }
   };
+
+  setCurrentTitle('');
 
   return (
     <Container component="main" maxWidth="xs">

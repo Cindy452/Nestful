@@ -23,7 +23,8 @@ const styles = (theme) => ({
     display: "flex",
     alignItems: "center",
     outline: "none",
-    justifyContent: "space-between"
+    justifyContent: "space-between",
+    marginRight: 250
   },
 
   logo: {
@@ -39,11 +40,11 @@ const styles = (theme) => ({
     "& span:not(:last-child)": {
       marginRight: "16px",
     },
-  },
+  }
 });
 
 const NavMenuComponent = withStyles(styles)(
-  ({ classes, activeStep, showSteps, totalSteps }) => {
+  ({ classes, currentTitle }) => {
     return (
       <div className={classes.root}>
         <AppBar position="static" color="secondary">
@@ -67,9 +68,7 @@ const NavMenuComponent = withStyles(styles)(
             </Box>
 
             <Typography variant="h5" className={classes.status}>
-              {showSteps
-                ? `Check In: Step ${activeStep + 1} of ${totalSteps}`
-                : null}
+              {currentTitle}
             </Typography>
 
             <Box></Box>

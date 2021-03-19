@@ -22,7 +22,7 @@ const styles = (theme) => ({
   },
 
   age: {
-    maxWidth: "60px",
+    maxWidth: "120px",
 
     "& input": {
       textAlign: "center",
@@ -54,6 +54,8 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
                   className={`${classes.textField} ${classes.age}`}
                   color="primary"
                   multiline={false}
+                  id="filled-basic" 
+                  variant="filled" 
                 />
                 years old.
               </div>
@@ -68,6 +70,8 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
                   className={`${classes.textField} ${classes.age}`}
                   color="primary"
                   multiline={false}
+                  id="filled-basic" 
+                  variant="filled" 
                 />
                 years old.
               </div>
@@ -82,6 +86,8 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
                   className={classes.textField}
                   color="primary"
                   multiline={false}
+                  id="filled-basic" 
+                  variant="filled" 
                 />
                 per year.
               </div>
@@ -96,6 +102,8 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
                   className={classes.textField}
                   color="primary"
                   multiline={false}
+                  id="filled-basic" 
+                  variant="filled" 
                 />
                 for retirement.
               </div>
@@ -110,6 +118,8 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes }) => {
                   className={classes.textField}
                   color="primary"
                   multiline={false}
+                  id="filled-basic" 
+                  variant="filled" 
                 />
                 per month until I retire.
               </div>
