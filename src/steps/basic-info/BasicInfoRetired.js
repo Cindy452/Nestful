@@ -23,7 +23,24 @@ const styles = (theme) => ({
   },
 });
 
-const BasicInfoRetired = withStyles(styles)(({ classes }) => {
+const BasicInfoRetired = withStyles(styles)(({ 
+    classes, 
+    monthlySpending, onMonthlySpendingChanged, 
+    monthlyPension, onMonthlyPensionChanged, 
+    currentNestEgg, onCurrentNestEggChanged }) => {
+  
+  const handleMonthlySpendingChanged = (e) => {
+    onMonthlySpendingChanged(e.target.value);
+  }
+
+  const handleMonthlyPensionChanged = (e) => {
+    onMonthlyPensionChanged(e.target.value);
+  }
+
+  const handleCurrentNestEggChanged = (e) => {
+    onCurrentNestEggChanged(e.target.value);
+  }
+  
   return (
     <div>
       <Typography variant="h4" color="textPrimary" gutterBottom align="center">
@@ -47,7 +64,9 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
                   color="primary"
                   multiline={false}
                   id="filled-basic" 
-                  variant="filled" 
+                  variant="filled"
+                  value={currentNestEgg}
+                  onChange={handleCurrentNestEggChanged}
                 />
              in my nest egg.
               </div>
@@ -65,7 +84,9 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
                   color="primary"
                   multiline={false}
                   id="filled-basic" 
-                  variant="filled" 
+                  variant="filled"
+                  value={monthlySpending}
+                  onChange={handleMonthlySpendingChanged}
                 />
                per month.
               </div>
@@ -82,7 +103,9 @@ const BasicInfoRetired = withStyles(styles)(({ classes }) => {
                     <InputAdornment position="start">$</InputAdornment>
                   }
                   id="filled-basic" 
-                  variant="filled" 
+                  variant="filled"
+                  value={monthlyPension}
+                  onChange={handleMonthlyPensionChanged}
                 />
                 per month from my company and /or government pensions plans(excluding RRSP withdrawals).
               </div>

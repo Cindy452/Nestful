@@ -45,6 +45,16 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
   const steps = ["Home", "Choose your journey", "Basic Info"];
 
   const [isRetired, setIsRetired] = useState(null);
+  const [age, setAge] = useState(null);
+  const [retiredAge, setRetiredAge] = useState(null);
+  const [income, setIncome] = useState(null);
+  const [saved, setSaved] = useState(null);
+  const [additionalSaving, setAdditionalSaving] = useState(null);
+
+  const [currentNestEgg, setCurrentNestEgg] = useState('');
+  const [monthlyPension, setMonthlyPension] = useState('');
+  const [monthlySpending, setMonthlySpending] = useState('');
+
 
   useMemo(() => { 
     if(activeStep > 0) {
@@ -53,7 +63,7 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
       setCurrentTitle('');
     }
    
-  }, [activeStep]);
+  }, [activeStep, setCurrentTitle, steps.length]);
 
   const getStepContent = (step) => {
     switch (step) {
@@ -64,7 +74,27 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
           <Journey handleSelection={handleSelection} isRetired={isRetired} />
         );
       case 2:
-        return isRetired ? <BasicInfoRetired /> : <BasicInfoNotRetired />;
+        return isRetired 
+        ? <BasicInfoRetired
+            monthlyPension={monthlyPension}
+            onMonthlyPensionChanged={setMonthlyPension}
+            monthlySpending={monthlySpending}
+            onMonthlySpendingChanged={setMonthlySpending}
+            currentNestEgg={currentNestEgg}
+            onCurrentNestEggChanged={setCurrentNestEgg}
+         /> 
+        : <BasicInfoNotRetired 
+            age={age} 
+            onAgeChanged={setAge} 
+            retiredAge={retiredAge} 
+            onRetiredAgeChanged={setRetiredAge}
+            income={income}
+            onIncomeChanged={setIncome}
+            saved={saved}
+            onSavedChanged={setSaved}
+            additionalSaving={additionalSaving}
+            onAdditionalSavingChanged={setAdditionalSaving}
+          />;
       default:
         return "Unknown stepIndex";
     }
@@ -86,7 +116,24 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
     <Container className={classes.container}>
       {activeStep === steps.length ? (
         <Box className="step">
-          {isRetired ? <RetiredResult /> : <NotRetiredResult />}
+          {isRetired ?
+           <RetiredResult  
+            currentNestEgg={currentNestEgg}
+            monthlySpending={monthlySpending}
+            monthlyPension={monthlyPension}
+           /> : 
+           <NotRetiredResult
+            age={age} 
+            onAgeChanged={setAge} 
+            retiredAge={retiredAge} 
+            onRetiredAgeChanged={setRetiredAge}
+            income={income}
+            onIncomeChanged={setIncome}
+            saved={saved}
+            onSavedChanged={setSaved}
+            additionalSaving={additionalSaving}
+            onAdditionalSavingChanged={setAdditionalSaving}
+           />}
         </Box>
       ) : (
         <Box className="step">

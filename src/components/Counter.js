@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
+import TextField from "@material-ui/core/TextField";
 
 function Counter(props) {
   const [count, setCount] = useState(0);
-  const [age, setAge] = useState(0);
-
+  const [age, setAge] = useState(95);
   const handleIncrement = () => {
     setCount((prevCount) => prevCount + 1);
   };
@@ -22,6 +22,10 @@ function Counter(props) {
     setAge((prevCount) => prevCount - 1);
   };
 
+  const handleChangeAge = (e) => {
+    setAge(e.target.value);
+  }
+
 
   return (
     <div>
@@ -37,8 +41,11 @@ function Counter(props) {
       <h1>Life expectancy</h1>
       <ButtonGroup color="primary" aria-label="outlined primary button group">
         <Button onClick={handleAgeIncrement}>+</Button>
-        <Button>{age}</Button>
-       
+        <TextField
+          onChange={handleChangeAge}
+          value={age}
+        />
+
         <Button onClick={handleAgeDecrement}>-</Button>
       </ButtonGroup>
       <p>
