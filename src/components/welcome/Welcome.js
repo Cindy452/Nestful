@@ -90,7 +90,7 @@ function Welcome({ setCurrentTitle }) {
     <div className={classes.container}>
       {userData.user ? (
         <Typography variant="h4" style={{ fontWeight: "bold" }}>
-          Welcome to Nestful {userData.user.displayName} !
+          Welcome to Nestful, {userData.user.displayName}!
         </Typography>
       ) : (
         <>
