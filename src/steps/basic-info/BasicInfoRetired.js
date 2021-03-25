@@ -19,6 +19,13 @@ const styles = (theme) => ({
     fontWeight: "600",
     lineHeight: "4em",
   },
+  title: {
+    marginBottom: "1.5rem",
+    fontWeight: 600
+  },
+  subtitle: {
+    marginBottom: "3.5rem"
+  }
 });
 
 const BasicInfoRetired = withStyles(styles)(({ 
@@ -41,11 +48,11 @@ const BasicInfoRetired = withStyles(styles)(({
   
   return (
     <div>
-      <Typography variant="h3" color="textPrimary" gutterBottom align="center" style={{fontWeight: "bold"}}>
+      <Typography variant="h3" color="textPrimary" gutterBottom align="center" className={classes.title}>
        Let's see if your nest egg is still on track
       </Typography>
 
-      <Typography variant="h5" color="textPrimary" gutterBottom align="center">
+      <Typography variant="h5" color="textPrimary" gutterBottom align="center" className={classes.subtitle}>
         Please fill in the fields below to see if you're still on track. Don't worry this stays between us.
       </Typography>
       <div class={classes.questions}>

@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-import { TextField, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import FormControl from "@material-ui/core/FormControl";
 import { MoneyInput, CustomTextField } from '../../components/CustomInputs';
@@ -16,6 +16,13 @@ const styles = (theme) => ({
     fontSize: '26px',
     margin: 10,
     fontWeight: "bold",
+  },
+  title: {
+    marginBottom: "1.5rem",
+    fontWeight: 600,
+  },
+  subtitle: {
+    marginBottom: "3.5rem"
   }
 });
 
@@ -43,10 +50,10 @@ const BasicInfoNotRetired = withStyles(styles)(({ classes, age, onAgeChanged, re
 
   return (
     <div>
-      <Typography variant="h3" color="textPrimary" gutterBottom align="center" style={{fontWeight: "bold"}}>
+      <Typography variant="h3" color="textPrimary" gutterBottom align="center" className={classes.title}>
         Let's see if you're on track to retire soon
       </Typography>
-      <Typography variant="h5" color="textPrimary" gutterBottom align="center">
+      <Typography variant="h5" color="textPrimary" gutterBottom align="center" className={classes.subtitle}>
         Please fill in the blanks to see if you're on track. Don't worry this stays between us.
       </Typography>
 
