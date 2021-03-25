@@ -3,17 +3,17 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
-import halfegg from "../../assets/egg.svg";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import NumericInput from "../../components/NumericInput";
+import { Link } from "react-router-dom";
+import NumberFormat from 'react-number-format';
+import halfegg from "../../assets/egg.svg";
 import onTrack from "../../assets/on-track.svg";
 import offTrack from "../../assets/off-track.svg";
 import emptyNest from "../../assets/empty-nest.svg";
 import { futureValue } from "../../helper";
 import Box from "@material-ui/core/Box";
+import { MoneyInput, NumericInput } from "../../components/CustomInputs";
 
 const styles = (theme) => ({
   resultsRoot: {
@@ -30,12 +30,17 @@ const styles = (theme) => ({
     height: 350,
     width: 300,
     backgroundColor: "#114B5F",
+    borderRadius: "16px",
   },
   signUpButton: {
     borderRadius: "25px",
     height: "48px",
     width: 240,
     backgroundColor: "#54878D",
+    "& span": {
+      textTransform: "none",
+      fontSize: "1.25rem",
+    }
   },
 
   question: {
@@ -86,22 +91,28 @@ const styles = (theme) => ({
   },
 
   input: {
-    lineHeight: 3,
-    justifyContent: "center",
-    "& input": {
-      textAlign: "center",
-      background: "#54878D",
-      color: "white",
-      borderRadius: "10px",
-    },
+    lineHeight: "3em",
   },
 
   withdrawInput: {
-    "& div": {
+    "&.MuiTextField-root": {
+      display: "block",
+      width: "310px !important",
+      height: "56px",
+      margin: 0,
+      marginTop: "1em",
+      backgroundColor: "white",
+      border: "3px solid #54878D",
+      fontSize: "24px",
       "& input": {
-        color: "white",
+          fontWeight: "400",
+          color: "#54878D",
       },
-    },
+      "& .MuiInputAdornment-root p": {
+          fontSize: "0.75em",
+          color: "#54878D",
+      },
+    }
   },
 });
 
@@ -174,16 +185,21 @@ const RetiredResult = withStyles(styles)(
               />
               <div>
                 <Typography className={classes.futureValueWithoutWithdrawal}>
-                  ${Math.round(futureValueWithoutWithdrawal)}
+                <NumberFormat value={Math.round(futureValueWithoutWithdrawal)} displayType="text" prefix="$" thousandSeparator=" " />
                   <Typography variant="h5">
                     Your nest egg value after {yearsOfNesteggLast} years with no withdrawals
                   </Typography>
                 </Typography>
 
                 <Typography className={classes.futureValueAfterWithdrawal}>
-                  ${Math.round(futureValueAfterWithdrawal)}
+                  <NumberFormat style={{color: futureValueAfterWithdrawal < 0 ? "#F45B69" : "inherit"}} value={Math.round(futureValueAfterWithdrawal)} displayType="text" prefix="$" thousandSeparator=" " />
                   <Typography variant="h5">
-                    What you'll have left after withdrawing {monthlySpending-monthlyPension} per month for{" "}
+                    What you'll have left after withdrawing <NumberFormat 
+                      value={monthlySpending-monthlyPension} 
+                      displayType="text"
+                      thousandSeparator=" "
+                      prefix="$"
+                    /> per month for{" "}
                     {yearsOfNesteggLast} years.
                   </Typography>
                 </Typography>
@@ -220,12 +236,13 @@ const RetiredResult = withStyles(styles)(
           </Grid>
           <Grid item xs={7}>
             <Typography variant="h5" gutterBottom align="left">
-              Current monthly retirement nest egg withdrawals(RRSP, TFSA, other
-              savings){" "}
-              <TextField
-                id="outlined-basic"
-                variant="outlined"
-                defaultValue="$2000"
+              Current monthly retirement nest egg withdrawals (RRSP, TFSA, other
+              savings).
+              <MoneyInput
+                disabled
+                className={classes.withdrawInput}
+                onChange={()=>{}}
+                value={monthlySpending - monthlyPension}
               />
             </Typography>
             <div className={classes.margin} />
@@ -237,7 +254,7 @@ const RetiredResult = withStyles(styles)(
                   setExpectedRateOfReturn(newAnnualReturn)
                 }
               />
-              <p>
+              <p style={{fontSize: "1.25rem"}}>
                 What do you expect your annual return on your retirement savings
                 to be?
               </p>
@@ -269,18 +286,15 @@ const RetiredResult = withStyles(styles)(
               variant="h5"
               className={classes.input}
             >
-              I have ${" "}
-              <TextField
-                variant="filled"
+              I have
+              <MoneyInput
                 value={currentNestEgg}
                 onChange={handleCurrentNestEggChanged}
-                className={classes.textField}
-              />{" "}
-              in my nestegg. I spend ${" "}
-              <TextField 
-              variant="filled" 
-              value={monthlySpending} 
-              onChange={handleMonthlySpendingChanged}
+              />
+              in my nestegg. I spend 
+              <MoneyInput
+                value={monthlySpending} 
+                onChange={handleMonthlySpendingChanged}
               /> per
               month.
             </Typography>
@@ -290,13 +304,11 @@ const RetiredResult = withStyles(styles)(
               variant="h5"
               className={classes.input}
             >
-              I receive of total of ${" "}
-              <TextField variant="filled" 
-              value={monthlyPension}
-              onChange={handleMonthlyPensionChanged} 
-
-              /> per
-              month from my company and /or government pensions plans(excluding
+              I receive of total of
+              <MoneyInput
+                value={monthlyPension}
+                onChange={handleMonthlyPensionChanged} 
+              /> per month from my company and /or government pensions plans(excluding
               RRSP withdrawals).
             </Typography>
           </Grid>

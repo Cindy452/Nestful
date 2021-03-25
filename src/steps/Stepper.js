@@ -24,18 +24,30 @@ const styles = (theme) => ({
   },
 
   buttonGrid: {
+    fontSize: "24px",
+    margin: "0 auto",
+    marginTop: "3em",
     padding: "20px",
+    maxWidth: "840px",
   },
 
   previous: {
     height: "48px",
     width: "48px",
+    float: "left",
   },
 
   continue: {
-    borderRadius: "25px",
-    height: "48px",
+    display: "block",
+    borderRadius: "200px",
+    height: "72px",
     width: "100%",
+    margin: "0 auto",
+    "& span": {
+      textTransform: "none",
+      fontWeight: "500",
+      fontSize: "24px",
+    }
   },
 });
 
@@ -48,8 +60,8 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
   const [age, setAge] = useState(null);
   const [retiredAge, setRetiredAge] = useState(null);
   const [income, setIncome] = useState(null);
-  const [saved, setSaved] = useState(null);
-  const [additionalSaving, setAdditionalSaving] = useState(null);
+  const [saved, setSaved] = useState("");
+  const [additionalSaving, setAdditionalSaving] = useState("");
 
   const [currentNestEgg, setCurrentNestEgg] = useState(null);
   const [monthlyPension, setMonthlyPension] = useState(null);
@@ -152,21 +164,22 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
             justify="space-around"
             alignItems="center"
           >
-            <Grid item xs={3} hidden={activeStep === 0}>
-              <Fab
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                color="primary"
-                className={classes.previous}
-              >
-                <ArrowBackIcon />
-              </Fab>
+            <Grid item xs={3}>
+              {activeStep !== 0 && 
+                <Fab
+                  disabled={activeStep === 0}
+                  onClick={handleBack}
+                  color="primary"
+                  className={classes.previous}
+                >
+                  <ArrowBackIcon />
+                </Fab>
+              }
             </Grid>
-            <Grid item xs={activeStep === 0 ? 8 : 6}>
+            <Grid item xs={6}>
               <Button
                 variant="contained"
                 color="primary"
-                size="large"
                 disabled={activeStep === 1 && isRetired === null}
                 onClick={handleNext}
                 className={classes.continue}
@@ -180,7 +193,7 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
                 </Typography>
               </Button>
             </Grid>
-            <Grid item xs={3} hidden={activeStep === 0}></Grid>
+            <Grid item xs={3}></Grid>
           </Grid>
         </Box>
       )}

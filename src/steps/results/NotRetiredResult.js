@@ -4,15 +4,15 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
+import NumberFormat from 'react-number-format';
 import halfEgg from "../../assets/egg.svg";
 import fullEgg from "../../assets/full_egg.svg";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import NumericInput from "../../components/NumericInput";
 import { futureValue } from "../../helper";
 import Box from '@material-ui/core/Box';
+import { MoneyInput, CustomTextField, NumericInput } from '../../components/CustomInputs';
 
 const styles = (theme) => ({
   resultsRoot: {
@@ -29,6 +29,7 @@ const styles = (theme) => ({
     height: 350,
     width: 300,
     backgroundColor: "#114B5F",
+    borderRadius: "16px",
   },
 
   question: {
@@ -61,6 +62,10 @@ const styles = (theme) => ({
     height: "48px",
     width: 240,
     backgroundColor: "#54878D",
+    "& span": {
+      textTransform: "none",
+      fontSize: "1.25rem",
+    }
   },
 
   egg: {
@@ -68,12 +73,11 @@ const styles = (theme) => ({
   },
 
   input: {
-    lineHeight: 3,
+    lineHeight: "4em",
     justifyContent: "center",
     "& input": {
       textAlign: "center",
       background: "#54878D",
-      color: "white",
       borderRadius: "10px",
     },
   },
@@ -174,7 +178,7 @@ const NotRetiredResult = withStyles(styles)(
         Math.round(parseInt(newPercentage) * currentIncome) / 100.0
       );
     };
-    const handleretirementIncomeChanged = (e) => {
+    const handleRetirementIncomeChanged = (e) => {
       if (isNaN(parseInt(e.target.value))) {
         setRetirementIncome(0);
       } else {
@@ -251,7 +255,7 @@ const NotRetiredResult = withStyles(styles)(
                   <Typography gutterBottom align="left" variant="h6">
                     We recommend that you have
                     <span className={classes.numbers}>
-                        ${recommendedNestEgg}
+                      <NumberFormat value={recommendedNestEgg} displayType="text" prefix="$" thousandSeparator=" " decimalScale={0} />
                     </span>
                     saved for retirement.
                   </Typography>
@@ -259,9 +263,9 @@ const NotRetiredResult = withStyles(styles)(
                 <Grid item>
                   {estimatedNestEgg <= recommendedNestEgg ? (
                     <Typography gutterBottom align="left" variant="h6">
-                      It looks like you will need to save additional
+                      It looks like you will need to save an additional
                       <span className={classes.numbers}>
-                        ${Math.round(recommendedNestEgg - estimatedNestEgg)}
+                        <NumberFormat value={recommendedNestEgg - estimatedNestEgg} displayType="text" prefix="$" thousandSeparator=" " decimalScale={0} />
                       </span>
                     </Typography>
                   ) : (
@@ -296,14 +300,14 @@ const NotRetiredResult = withStyles(styles)(
                   />
                   <div>
                     <Typography className={classes.recommendedNestEgg}>
-                      ${recommendedNestEgg}
+                      <NumberFormat value={recommendedNestEgg} displayType="text" prefix="$" thousandSeparator=" " decimalScale={0} />
                       <Typography variant="h5">
                         What you will need for retirement
                       </Typography>
                     </Typography>
 
                     <Typography className={classes.estimatedNestEgg}>
-                      ${Math.round(estimatedNestEgg)}
+                      <NumberFormat value={estimatedNestEgg} displayType="text" prefix="$" thousandSeparator=" " decimalScale={0} />
                       <Typography variant="h5">
                         What you will have for retirement
                       </Typography>
@@ -336,18 +340,15 @@ const NotRetiredResult = withStyles(styles)(
             </Typography>
             <Typography variant="h5" gutterBottom align="left">
               We made some assumptions to give you our recommended nest egg size
-              but you can adjust them to see how they'll affect your results
+              but you can adjust them to see how they'll affect your results.
             </Typography>
           </Grid>
           <Grid item xs={7}>
             <Typography variant="h5" gutterBottom align="left">
-              I want my income to be ${" "}
-              <TextField
-                id="filled-basic"
-                variant="filled"
-                className={classes.incomeInput}
-                value={retirementIncome}
-                onChange={handleretirementIncomeChanged}
+              I want my income to be
+              <MoneyInput
+                value={Math.round(retirementIncome)}
+                onChange={handleRetirementIncomeChanged}
               />
               {" "}in retirement
             </Typography>
@@ -356,14 +357,14 @@ const NotRetiredResult = withStyles(styles)(
               value={(100.0 * retirementIncome) / income}
               onChange={handleSliderChange}
             />
-            <Typography gutterBottom>
+            <Typography gutterBottom style={{fontSize: "1.25rem"}}>
               {currentIncome === 0
                 ? `$${retirementIncome} more than current income`
                 : `${Math.round(
                     (100.0 * retirementIncome) / currentIncome
                   )}% of current income`}
             </Typography>
-            <Typography gutterBottom>
+            <Typography style={{fontSize: "1.25rem"}} gutterBottom>
               Having 70% of your current annual income in retirement is a
               general rule of thumb.
             </Typography>
@@ -376,7 +377,7 @@ const NotRetiredResult = withStyles(styles)(
                   setExpectedRateOfReturn(newAnnualReturn)
                 }
               />
-              <p>
+              <p style={{fontSize: "1.25rem"}}>
                 What do you expect your annual return on your retirement savings
                 to be?
               </p>
@@ -387,7 +388,7 @@ const NotRetiredResult = withStyles(styles)(
                   setLifeExpectancy(newLifeExpectancy)
                 }
               />
-              <p>
+              <p style={{fontSize: "1.25rem"}}>
                 A life expectancy of 95 years is a common financially
                 conservative estimate for Canadians
               </p>
@@ -417,53 +418,31 @@ const NotRetiredResult = withStyles(styles)(
               variant="h5"
               className={classes.input}
             >
-              I am{" "}
-              <TextField
-                variant="filled"
-                className={classes.textField}
+              I am
+              <CustomTextField
                 value={age}
                 onChange={handleAgeChanged}
-              />{" "}
+              />
               years old.I want to retire when I am
-              <TextField
-                variant="filled"
+              <CustomTextField
                 value={retiredAge}
                 onChange={handleRetiredAgeChanged}
-              />{" "}
-              years old.
-            </Typography>
-            <Typography
-              gutterBottom
-              align="left"
-              variant="h5"
-              className={classes.input}
-            >
-              I make $
-              <TextField
-                variant="filled"
+              />
+              years old. I make
+              <MoneyInput
                 value={income}
                 onChange={handleIncomeChanged}
-              />{" "}
-              per year. I've saved $
-              <TextField
-                variant="filled"
+              />
+              per year. I've saved
+              <MoneyInput
                 value={saved}
                 onChange={handleSavedChanged}
-              />{" "}
-              for retirement.
-            </Typography>
-            <Typography
-              gutterBottom
-              align="left"
-              variant="h5"
-              className={classes.input}
-            >
-              I plan to save an additional $
-              <TextField
-                variant="filled"
+              />
+              for retirement. I plan to save an additional
+              <MoneyInput
                 value={additionalSaving}
                 onChange={handleAdditionalSavingChanged}
-              />{" "}
+              />
               per month until I retire.
             </Typography>
           </Grid>

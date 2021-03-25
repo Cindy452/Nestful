@@ -12,7 +12,7 @@ const Journey = ({ handleSelection, isRetired }) => {
   return (
     <div className="journey">
       <Typography variant='h3' color="textPrimary" gutterBottom align="center" style={{width: "50rem"}}>
-      <Box fontWeight="fontWeightBold">
+      <Box fontWeight="fontWeightBold" style={{marginBottom: "3.5rem"}}>
       First, tell us where you are on the retirement journey.
       </Box>
       
