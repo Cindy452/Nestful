@@ -13,13 +13,17 @@ const styles = (theme) => ({
   },
 
   question: {
-    display: "flex",
-    alignItems: "center",
-    paddingRight: "4px",
-    justifyContent: "center",
-    whiteSpace: "nowrap",
-    fontSize: 'large',
-    margin: 10
+   marginBottom: 20,
+    paddingRight: "10px",
+    fontSize: '26px',
+    marginLeft: 82,
+    fontWeight: "bold",
+    "& input": {
+      textAlign: "center",
+      background: "#54878D",
+      color: "white",
+      borderRadius: "10px",
+    },
   },
 });
 
@@ -43,7 +47,7 @@ const BasicInfoRetired = withStyles(styles)(({
   
   return (
     <div>
-      <Typography variant="h4" color="textPrimary" gutterBottom align="center">
+      <Typography variant="h3" color="textPrimary" gutterBottom align="center" style={{fontWeight: "bold"}}>
        Let's see if your nest egg is still on track
       </Typography>
 
@@ -52,8 +56,8 @@ const BasicInfoRetired = withStyles(styles)(({
       </Typography>
 
      
-      <FormControl>
-          <Grid container justify="center" alignItems="center">
+      <FormControl style={{paddingBottom: 25}}>
+          <Grid container style={{margin: 20}}>
             <Grid item md={6}>
               <div className={classes.question}>
                I have $
@@ -72,8 +76,8 @@ const BasicInfoRetired = withStyles(styles)(({
               </div>
             </Grid>
 
-            <Grid item>
-              <div className={classes.question}>
+            <Grid item md={6}>
+              <div className={classes.question} style={{marginLeft: "auto"}}>
                 I spend $
                 <TextField
                   type="text"
@@ -94,7 +98,7 @@ const BasicInfoRetired = withStyles(styles)(({
 
             <Grid item>
               <div className={classes.question}>
-                I receive of total of $
+                I receive a total of $
                 <TextField
                   className={`${classes.textField}`}
                   color="primary"

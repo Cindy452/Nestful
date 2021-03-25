@@ -11,6 +11,8 @@ import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
 import NumericInput from "../../components/NumericInput";
+import { futureValue } from "../../helper";
+import Box from '@material-ui/core/Box';
 
 const styles = (theme) => ({
   resultsRoot: {
@@ -51,7 +53,7 @@ const styles = (theme) => ({
     borderRadius: 10,
     color: "#fff",
     backgroundColor: "#114B5F",
-    marginTop: -107
+    marginTop: -187,
   },
 
   signUpButton: {
@@ -76,7 +78,7 @@ const styles = (theme) => ({
     },
   },
   numbers: {
-    color: "red",
+    color: "#F45B69",
     paddingRight: 8,
     paddingLeft: 8,
   },
@@ -90,6 +92,7 @@ const styles = (theme) => ({
     right: -446,
     fontSize: "2rem",
     fontWeight: "bold",
+    width: 300,
   },
 
   estimatedNestEgg: {
@@ -98,6 +101,7 @@ const styles = (theme) => ({
     right: -446,
     fontSize: "2rem",
     fontWeight: "bold",
+    width: 300,
   },
 
   incomeInput: {
@@ -107,6 +111,9 @@ const styles = (theme) => ({
     "& div": {
       "& input": {
         color: "white",
+        fontSize: 20,
+        marginTop: -20,
+        width: 125
       },
     },
   },
@@ -203,33 +210,6 @@ const NotRetiredResult = withStyles(styles)(
     // ROR = expectedRateOfReturn
     // t =
 
-    const futureValue = (
-      presentValue,
-      additionalAnnualInvestment,
-      annualRateOfReturn,
-      periods
-    ) => {
-      console.log(
-        presentValue,
-        additionalAnnualInvestment,
-        annualRateOfReturn,
-        periods
-      );
-
-      let rateOfReturnMultiplier = Math.pow(1 + annualRateOfReturn, periods);
-      let currentSavingsFV = presentValue * rateOfReturnMultiplier;
-      let additionalAnnualInvestmentFV =
-        (additionalAnnualInvestment * (rateOfReturnMultiplier - 1)) /
-        annualRateOfReturn;
-
-      console.log(
-        rateOfReturnMultiplier,
-        currentSavingsFV,
-        additionalAnnualInvestmentFV
-      );
-      return currentSavingsFV + additionalAnnualInvestmentFV;
-    };
-
     const recommendedNestEgg = (lifeExpectancy - retiredAge) * retirementIncome;
 
     const estimatedNestEgg = futureValue(
@@ -254,7 +234,6 @@ const NotRetiredResult = withStyles(styles)(
 
     //  return totalFutureValue;
     // }
-
     return (
       <div className="resultsRoot">
         <Grid className={classes.grid1} container spacing={3}>
@@ -268,7 +247,7 @@ const NotRetiredResult = withStyles(styles)(
                 </Grid>
                 <Grid item>
                   <Typography gutterBottom align="left" variant="h6">
-                    We recommended that you have
+                    We recommend that you have
                     <span className={classes.numbers}>
                       ${recommendedNestEgg}
                     </span>
@@ -291,10 +270,15 @@ const NotRetiredResult = withStyles(styles)(
                 </Grid>
               </Grid>
 
-              {/*              
-              <Typography gutterBottom align="left" variant="h6">
-                Learn how we got here
-              </Typography> */}
+              <Typography
+                gutterBottom
+                align="center"
+                variant="h6"
+                style={{ marginTop: -15 }}
+              >
+                See our assumptions &#x3e;
+                <Box p={3} />
+              </Typography>
             </Paper>
           </Grid>
           <Grid item xs={8}>
@@ -310,19 +294,19 @@ const NotRetiredResult = withStyles(styles)(
                   />
                   <div>
                     <Typography className={classes.recommendedNestEgg}>
-                    ${recommendedNestEgg}
-                    <Typography variant="h5">
-                      What you will need for retirement
+                      ${recommendedNestEgg}
+                      <Typography variant="h5">
+                        What you will need for retirement
+                      </Typography>
                     </Typography>
-                  </Typography>
-              
+
                     <Typography className={classes.estimatedNestEgg}>
                       ${Math.round(estimatedNestEgg)}
                       <Typography variant="h5">
                         What you will have for retirement
                       </Typography>
-                    </Typography></div>
-                
+                    </Typography>
+                  </div>
                 </div>
               </Grid>
             </Grid>
@@ -355,7 +339,7 @@ const NotRetiredResult = withStyles(styles)(
           </Grid>
           <Grid item xs={7}>
             <Typography variant="h5" gutterBottom align="left">
-              I want my income to be $
+              I want my income to be ${" "}
               <TextField
                 id="filled-basic"
                 variant="filled"
@@ -363,7 +347,7 @@ const NotRetiredResult = withStyles(styles)(
                 value={retirementIncome}
                 onChange={handleretirementIncomeChanged}
               />
-              in retirement
+              {" "}in retirement
             </Typography>
             <div className={classes.margin} />
             <PrettoSlider
@@ -478,7 +462,7 @@ const NotRetiredResult = withStyles(styles)(
                 value={additionalSaving}
                 onChange={handleAdditionalSavingChanged}
               />{" "}
-              per month untile I retire.
+              per month until I retire.
             </Typography>
           </Grid>
         </Grid>

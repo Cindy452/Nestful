@@ -50,10 +50,10 @@ const useStyles = makeStyles({
     alignItems: "center",
     borderRadius: "50%",
     "& img": {
-        width: "60%",
-        height: "60%",
-        margin: "auto auto",
-      },
+      width: "60%",
+      height: "60%",
+      margin: "auto auto",
+    },
   },
   Logo3: {
     maxHeight: 80,
@@ -63,6 +63,15 @@ const useStyles = makeStyles({
     display: "flex",
     alignItems: "center",
     fontWeight: "bold",
+  },
+
+  LinkStyle: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "flex-end",
+    padding: 20,
+    color: "rgb(17, 75, 95)",
+    textDecoration: "none"
   },
 });
 
@@ -115,12 +124,8 @@ function Welcome({ setCurrentTitle }) {
               gutterBottom
             />
             <Grid container spacing={2}>
-              <Grid item  className={classes.Logo2}>
-                <img
-                  src={BluePrint}
-                  alt="BluePrint-logo"
-                 
-                />
+              <Grid item className={classes.Logo2}>
+                <img src={BluePrint} alt="BluePrint-logo" />
               </Grid>
               <Grid item xs={12} sm container>
                 <Typography variant="h5" className={classes.LogoText}>
@@ -137,13 +142,19 @@ function Welcome({ setCurrentTitle }) {
               variant="h6"
               style={{ cursor: "pointer" }}
               align="right"
-            ><a href="https://www.w3schools.com" target="blank">
-              <img
-                src={DownloadIcon}
-                alt="download-icon"
-                className={classes.Logo3}
-              /></a>
-              Download template
+            >
+              <a
+                href="https://docs.google.com/spreadsheets/d/1wCV7ggRgM7fc9fJwSeRfpMm49sl262bUNcDXNRLCYjg/edit?usp=sharing"
+                target="blank"
+                className={classes.LinkStyle}
+              >
+                <img
+                  src={DownloadIcon}
+                  alt="download-icon"
+                  className={classes.Logo3}
+                />
+                Download template
+              </a>
             </Typography>
           </CardContent>
         </Card>
@@ -160,7 +171,7 @@ function Welcome({ setCurrentTitle }) {
           variant="h5"
           style={{ marginTop: "20px", marginBottom: "20px" }}
         >
-          A happy retirement is more than just money, It's important to stay
+          A happy retirement is more than just money, it's important to stay
           active, engaged and socially connected to live a healthy and
           fulfilling retirement.
         </Typography>
@@ -174,11 +185,11 @@ function Welcome({ setCurrentTitle }) {
 
             <Grid container spacing={2}>
               <Grid item className={classes.Logo2}>
-                <img src={BookPen} alt="list-logo"  />
+                <img src={BookPen} alt="list-logo" />
               </Grid>
               <Grid item xs={12} sm container>
                 <Typography variant="h5" className={classes.LogoText}>
-                  Retirement Check list
+                  Retirement Checklist
                 </Typography>
 
                 <Typography variant="h6">
@@ -191,13 +202,19 @@ function Welcome({ setCurrentTitle }) {
               variant="h6"
               style={{ cursor: "pointer" }}
               align="right"
-            ><a href="https://www.w3schools.com" target="blank">
-              <img
-                src={DownloadIcon}
-                alt="download-icon"
-                className={classes.Logo3}
-              /></a>
-              Download check List
+            >
+              <a
+                href="Nestful_Pre-Retirement_Checklist.pdf"
+                target="blank"
+                className={classes.LinkStyle}
+              >
+                <img
+                  src={DownloadIcon}
+                  alt="download-icon"
+                  className={classes.Logo3}
+                />{" "}
+                Download checklist
+              </a>
             </Typography>
           </CardContent>
         </Card>
@@ -242,7 +259,9 @@ function Welcome({ setCurrentTitle }) {
               style={{ cursor: "pointer" }}
               align="right"
             >
-              <Link to="/" style={{ color: '#114B5F' }}>Go to retirement check in</Link>
+              <Link to="/" style={{ color: "#114B5F" }}>
+                Go to retirement check in
+              </Link>
             </Typography>
           </CardContent>
         </Card>

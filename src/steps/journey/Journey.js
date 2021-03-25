@@ -4,13 +4,18 @@ import Logo1 from "../../assets/undraw_To_do_list.svg";
 import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import React from "react";
+import Box from '@material-ui/core/Box';
+
 
 const Journey = ({ handleSelection, isRetired }) => {
 
   return (
     <div className="journey">
-      <Typography variant="h4" color="textPrimary" gutterBottom align="center">
-        First, tell us where you are on the retirement journey
+      <Typography variant='h3' color="textPrimary" gutterBottom align="center" style={{width: "50rem"}}>
+      <Box fontWeight="fontWeightBold">
+      First, tell us where you are on the retirement journey.
+      </Box>
+      
       </Typography>
 
       <Grid

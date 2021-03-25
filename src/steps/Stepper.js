@@ -51,15 +51,18 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
   const [saved, setSaved] = useState(null);
   const [additionalSaving, setAdditionalSaving] = useState(null);
 
-  const [currentNestEgg, setCurrentNestEgg] = useState('');
-  const [monthlyPension, setMonthlyPension] = useState('');
-  const [monthlySpending, setMonthlySpending] = useState('');
+  const [currentNestEgg, setCurrentNestEgg] = useState(null);
+  const [monthlyPension, setMonthlyPension] = useState(null);
+  const [monthlySpending, setMonthlySpending] = useState(null);
 
 
   useMemo(() => { 
-    if(activeStep > 0) {
+    if(activeStep > 0 && activeStep < 3) {
       setCurrentTitle(`Check In: Step ${activeStep} of ${steps.length}`);
-    }else {
+    } else if(activeStep === 3) {
+      setCurrentTitle('Check In Complete!')
+    }
+   else {
       setCurrentTitle('');
     }
    
@@ -121,6 +124,9 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
             currentNestEgg={currentNestEgg}
             monthlySpending={monthlySpending}
             monthlyPension={monthlyPension}
+            onCurrentNestEggChanged={setCurrentNestEgg}
+            onMonthlySpendingChanged={setMonthlySpending}
+            onMonthlyPensionChanged={setMonthlyPension}
            /> : 
            <NotRetiredResult
             age={age} 

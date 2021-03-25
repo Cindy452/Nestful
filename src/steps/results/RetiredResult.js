@@ -5,16 +5,20 @@ import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
-import Logo from "../../assets/full_egg.svg";
-import Slider from "@material-ui/core/Slider";
-import Counter from "../../components/Counter";
+import halfegg from "../../assets/egg.svg";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import NumericInput from "../../components/NumericInput";
+import onTrack from "../../assets/on-track.svg";
+import offTrack from "../../assets/off-track.svg";
+import emptyNest from "../../assets/empty-nest.svg";
+import { futureValue } from "../../helper";
+import Box from "@material-ui/core/Box";
 
 const styles = (theme) => ({
   resultsRoot: {
     flexGrow: 1,
-    height: 8
+    height: 8,
   },
 
   paper: {
@@ -25,6 +29,13 @@ const styles = (theme) => ({
     color: theme.palette.text.secondary,
     height: 350,
     width: 300,
+    backgroundColor: "#114B5F",
+  },
+  signUpButton: {
+    borderRadius: "25px",
+    height: "48px",
+    width: 240,
+    backgroundColor: "#54878D",
   },
 
   question: {
@@ -37,91 +48,156 @@ const styles = (theme) => ({
 
   grid1: {
     minHeight: 300,
-    margin: 20,
+    marginBottom: 20,
   },
 
-  button: {
-    height: 100,
+  buttonContainer: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
     fontSize: "1.5rem",
     padding: 25,
     borderRadius: 10,
-    color: "#fff"
+    color: "#fff",
+    backgroundColor: "#114B5F",
+    marginTop: -187,
   },
 
-  egg: {
-    height: 400,
+  futureValueWithoutWithdrawal: {
+    position: "relative",
+    top: -371,
+    right: -446,
+    fontSize: "2rem",
+    fontWeight: "bold",
+    width: 300,
+  },
+
+  futureValueAfterWithdrawal: {
+    position: "relative",
+    top: -304,
+    right: -446,
+    fontSize: "2rem",
+    fontWeight: "bold",
+    width: 300,
+  },
+
+  halfegg: {
+    height: 350,
   },
 
   input: {
     lineHeight: 3,
-    justifyContent: 'center'
-  }
-});
-
-const PrettoSlider = withStyles({
-  root: {
-    color: "#114B5F",
-    height: 8,
-  },
-  thumb: {
-    height: 30,
-    width: 30,
-    backgroundColor: "#54878D",
-    border: "3px solid white",
-    marginTop: -12,
-    marginLeft: -12,
-    "&:focus, &:hover, &$active": {
-      boxShadow: "inherit",
+    justifyContent: "center",
+    "& input": {
+      textAlign: "center",
+      background: "#54878D",
+      color: "white",
+      borderRadius: "10px",
     },
   },
-  active: {},
-  valueLabel: {
-    left: "calc(-50% + 4px)",
+
+  withdrawInput: {
+    "& div": {
+      "& input": {
+        color: "white",
+      },
+    },
   },
-  track: {
-    height: 8,
-    borderRadius: 4,
-  },
-  rail: {
-    height: 8,
-    borderRadius: 4,
-  },
-})(Slider);
+});
 
 const RetiredResult = withStyles(styles)(
-  ({ classes, currentNestEgg, monthlySpending, monthlyPension }) => {
-    const [
-      retirementIncomePercentage,
-      setRetirementIncomePercentage,
-    ] = useState(70);
+  ({ classes, currentNestEgg, monthlySpending, monthlyPension, onCurrentNestEggChanged,  onMonthlySpendingChanged,    onMonthlyPensionChanged }) => {
+    const [expectedRateOfReturn, setExpectedRateOfReturn] = useState(3.0);
 
-    const handleSliderChange = (e, NewRetirementIncomePercentage) => {
-      setRetirementIncomePercentage(parseInt(NewRetirementIncomePercentage));
-    };
+    const [yearsOfNesteggLast, setYearsOfNesteggLast] = useState(30);
 
-    const handleInputChange = (e) => {
-      setRetirementIncomePercentage(e.target.retirementIncomePercentage === '' ? '' : Number(e.target.retirementIncomePercentage));
-    };
+    const handleMonthlySpendingChanged = (e) => {
+      onMonthlySpendingChanged(e.target.value);
+    }
+  
+    const handleMonthlyPensionChanged = (e) => {
+      onMonthlyPensionChanged(e.target.value);
+    }
+  
+    const handleCurrentNestEggChanged = (e) => {
+      onCurrentNestEggChanged(e.target.value);
+    }
+
+    const futureValueAfterWithdrawal = futureValue(
+      currentNestEgg,
+      (monthlySpending - monthlyPension) * -12,
+      expectedRateOfReturn / 100.0,
+      yearsOfNesteggLast
+    );
+
+    const futureValueWithoutWithdrawal = futureValue(
+      currentNestEgg,
+      0,
+      expectedRateOfReturn / 100.0,
+      yearsOfNesteggLast
+    );
+
+   
 
     return (
       <div className="resultsRoot">
         <Grid className={classes.grid1} container spacing={3}>
-          <Grid item xs={6}>
+          <Grid item xs={4}>
             <Paper className={classes.paper}>
-              Your results:{" "}
-              <Typography gutterBottom align="center">
-                Your spending is on track!
+              Your results:
+              <Typography gutterBottom align="center" variant="h5">
+                {futureValueAfterWithdrawal < 0
+                  ? "Your spending is not on track!"
+                  : "Your spending is on track!"}
+              </Typography>
+              <img
+                src={futureValueAfterWithdrawal < 0 ? offTrack : onTrack}
+                alt="track-logo"
+              />
+              <Typography
+                gutterBottom
+                align="center"
+                variant="h5"
+                style={{ marginTop: -15 }}
+              >
+                See our assumptions &#x3e;
+                <Box p={3} />
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6}>
-            <img src={Logo} alt="full-egg" className={classes.egg} />
+          <Grid item xs={8}>
+            <div>
+              <img
+                src={futureValueAfterWithdrawal < 0 ? emptyNest : halfegg}
+                alt="nest-egg"
+                className={`${classes.halfegg} ${classes.emptyegg}`}
+              />
+              <div>
+                <Typography className={classes.futureValueWithoutWithdrawal}>
+                  ${Math.round(futureValueWithoutWithdrawal)}
+                  <Typography variant="h5">
+                    Your nest egg value after {yearsOfNesteggLast} years with no withdrawals
+                  </Typography>
+                </Typography>
+
+                <Typography className={classes.futureValueAfterWithdrawal}>
+                  ${Math.round(futureValueAfterWithdrawal)}
+                  <Typography variant="h5">
+                    What you'll have left after withdrawing {monthlySpending-monthlyPension} per month for{" "}
+                    {yearsOfNesteggLast} years.
+                  </Typography>
+                </Typography>
+              </div>
+            </div>
           </Grid>
           <Grid item xs={12}>
-            <Paper className={classes.button}>
-              Get started with Nestful and unlock your step-by-step path to a
-              happy and fulfilling retirement.
+            <Paper className={classes.buttonContainer}>
+              {futureValueAfterWithdrawal < 0
+                ? "Sign up with Nestful to get your retirement finances back on track and live your retirement dreams! "
+                : " Get started with Nestful and unlock your step-by-step path to a happy and fulfilling retirement."}
+
               <Button
+                className={classes.signUpButton}
                 component={Link}
                 to="/signup"
                 variant="contained"
@@ -138,34 +214,44 @@ const RetiredResult = withStyles(styles)(
               We made some assumptions for you
             </Typography>
             <Typography variant="h5" gutterBottom align="left">
-              We made some assumptions about your situation 
-              but you can adjust them to see how they'll affect your results
+              We made some assumptions about your situation but you can adjust
+              them to see how they'll affect your results
             </Typography>
           </Grid>
           <Grid item xs={7}>
-            <Typography variant="h4" gutterBottom align="left">
-              I currently withdraw $
+            <Typography variant="h5" gutterBottom align="left">
+              Current monthly retirement nest egg withdrawals(RRSP, TFSA, other
+              savings){" "}
               <TextField
-                id="filled-basic"
-                variant="filled"
-                defaultValue="3000"
+                id="outlined-basic"
+                variant="outlined"
+                defaultValue="$2000"
               />
-              per month from my nest egg(RRSP, TFSA, etc.) 
             </Typography>
             <div className={classes.margin} />
-            <PrettoSlider
-              retirementIncomePercentage={typeof `${retirementIncomePercentage}%` === '70' ? retirementIncomePercentage : 0}
-              onChange={handleSliderChange}
-              defaultValue='70'
-            />
-            <Typography gutterBottom
-               onChange={handleInputChange}
-            >{`${retirementIncomePercentage}%`}of current saving
-            </Typography>
-            <Counter />
+            <div>
+              <h1>Average Annual Return</h1>
+              <NumericInput
+                value={expectedRateOfReturn}
+                onValueChanged={(newAnnualReturn) =>
+                  setExpectedRateOfReturn(newAnnualReturn)
+                }
+              />
+              <p>
+                What do you expect your annual return on your retirement savings
+                to be?
+              </p>
+              <h1>Years Nest Egg Should Last</h1>
+              <NumericInput
+                value={yearsOfNesteggLast}
+                onValueChanged={(newYearsOfNesteggLast) =>
+                  setYearsOfNesteggLast(newYearsOfNesteggLast)
+                }
+              />
+            </div>
           </Grid>
         </Grid>
-        <Divider />
+        <Divider style={{ margin: 20 }} />
         <Grid className={classes.grid1} container spacing={10}>
           <Grid item xs={5}>
             <Typography gutterBottom align="left" variant="h4">
@@ -177,18 +263,41 @@ const RetiredResult = withStyles(styles)(
             </Typography>
           </Grid>
           <Grid item xs={7}>
-            <Typography gutterBottom align="left" variant="h5" className={classes.input}>
-            I have ${" "}
+            <Typography
+              gutterBottom
+              align="left"
+              variant="h5"
+              className={classes.input}
+            >
+              I have ${" "}
               <TextField
                 variant="filled"
-                defaultValue={currentNestEgg}
+                value={currentNestEgg}
+                onChange={handleCurrentNestEggChanged}
                 className={classes.textField}
               />{" "}
-             in my nestegg.   I spend ${" "}
-              <TextField variant="filled" defaultValue={monthlySpending} />  per month.
+              in my nestegg. I spend ${" "}
+              <TextField 
+              variant="filled" 
+              value={monthlySpending} 
+              onChange={handleMonthlySpendingChanged}
+              /> per
+              month.
             </Typography>
-            <Typography gutterBottom align="left" variant="h5" className={classes.input}>
-            I receive of total of $ <TextField variant="filled" defaultValue={monthlyPension} />     per month from my company and /or government pensions plans(excluding RRSP withdrawals).
+            <Typography
+              gutterBottom
+              align="left"
+              variant="h5"
+              className={classes.input}
+            >
+              I receive of total of ${" "}
+              <TextField variant="filled" 
+              value={monthlyPension}
+              onChange={handleMonthlyPensionChanged} 
+
+              /> per
+              month from my company and /or government pensions plans(excluding
+              RRSP withdrawals).
             </Typography>
           </Grid>
         </Grid>
