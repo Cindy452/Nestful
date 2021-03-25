@@ -233,7 +233,9 @@ const NotRetiredResult = withStyles(styles)(
     //  let totalFutureValue = futureValueIntitialDeposit + futureValuePayments;
 
     //  return totalFutureValue;
-    // }
+ // }
+
+ 
     return (
       <div className="resultsRoot">
         <Grid className={classes.grid1} container spacing={3}>
@@ -249,7 +251,7 @@ const NotRetiredResult = withStyles(styles)(
                   <Typography gutterBottom align="left" variant="h6">
                     We recommend that you have
                     <span className={classes.numbers}>
-                      ${recommendedNestEgg}
+                        ${recommendedNestEgg}
                     </span>
                     saved for retirement.
                   </Typography>
