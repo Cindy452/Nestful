@@ -30,12 +30,17 @@ const styles = (theme) => ({
     height: 350,
     width: 300,
     backgroundColor: "#114B5F",
+    borderRadius: "16px",
   },
   signUpButton: {
     borderRadius: "25px",
     height: "48px",
     width: 240,
     backgroundColor: "#54878D",
+    "& span": {
+      textTransform: "none",
+      fontSize: "1.25rem",
+    }
   },
 
   question: {
@@ -249,7 +254,7 @@ const RetiredResult = withStyles(styles)(
                   setExpectedRateOfReturn(newAnnualReturn)
                 }
               />
-              <p>
+              <p style={{fontSize: "1.25rem"}}>
                 What do you expect your annual return on your retirement savings
                 to be?
               </p>

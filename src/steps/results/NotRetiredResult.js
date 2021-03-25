@@ -29,6 +29,7 @@ const styles = (theme) => ({
     height: 350,
     width: 300,
     backgroundColor: "#114B5F",
+    borderRadius: "16px",
   },
 
   question: {
@@ -61,6 +62,10 @@ const styles = (theme) => ({
     height: "48px",
     width: 240,
     backgroundColor: "#54878D",
+    "& span": {
+      textTransform: "none",
+      fontSize: "1.25rem",
+    }
   },
 
   egg: {
@@ -258,7 +263,7 @@ const NotRetiredResult = withStyles(styles)(
                 <Grid item>
                   {estimatedNestEgg <= recommendedNestEgg ? (
                     <Typography gutterBottom align="left" variant="h6">
-                      It looks like you will need to save additional
+                      It looks like you will need to save an additional
                       <span className={classes.numbers}>
                         <NumberFormat value={recommendedNestEgg - estimatedNestEgg} displayType="text" prefix="$" thousandSeparator=" " decimalScale={0} />
                       </span>
@@ -335,7 +340,7 @@ const NotRetiredResult = withStyles(styles)(
             </Typography>
             <Typography variant="h5" gutterBottom align="left">
               We made some assumptions to give you our recommended nest egg size
-              but you can adjust them to see how they'll affect your results
+              but you can adjust them to see how they'll affect your results.
             </Typography>
           </Grid>
           <Grid item xs={7}>
@@ -352,14 +357,14 @@ const NotRetiredResult = withStyles(styles)(
               value={(100.0 * retirementIncome) / income}
               onChange={handleSliderChange}
             />
-            <Typography gutterBottom>
+            <Typography gutterBottom style={{fontSize: "1.25rem"}}>
               {currentIncome === 0
                 ? `$${retirementIncome} more than current income`
                 : `${Math.round(
                     (100.0 * retirementIncome) / currentIncome
                   )}% of current income`}
             </Typography>
-            <Typography gutterBottom>
+            <Typography style={{fontSize: "1.25rem"}} gutterBottom>
               Having 70% of your current annual income in retirement is a
               general rule of thumb.
             </Typography>
@@ -372,7 +377,7 @@ const NotRetiredResult = withStyles(styles)(
                   setExpectedRateOfReturn(newAnnualReturn)
                 }
               />
-              <p>
+              <p style={{fontSize: "1.25rem"}}>
                 What do you expect your annual return on your retirement savings
                 to be?
               </p>
@@ -383,7 +388,7 @@ const NotRetiredResult = withStyles(styles)(
                   setLifeExpectancy(newLifeExpectancy)
                 }
               />
-              <p>
+              <p style={{fontSize: "1.25rem"}}>
                 A life expectancy of 95 years is a common financially
                 conservative estimate for Canadians
               </p>
