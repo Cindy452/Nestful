@@ -4,15 +4,15 @@ import Grid from "@material-ui/core/Grid";
 import { Typography } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
-import TextField from "@material-ui/core/TextField";
+import NumberFormat from 'react-number-format';
 import halfEgg from "../../assets/egg.svg";
 import fullEgg from "../../assets/full_egg.svg";
 import Slider from "@material-ui/core/Slider";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import NumericInput from "../../components/NumericInput";
 import { futureValue } from "../../helper";
 import Box from '@material-ui/core/Box';
+import { MoneyInput, CustomTextField, NumericInput } from '../../components/CustomInputs';
 
 const styles = (theme) => ({
   resultsRoot: {
@@ -68,12 +68,11 @@ const styles = (theme) => ({
   },
 
   input: {
-    lineHeight: 3,
+    lineHeight: "4em",
     justifyContent: "center",
     "& input": {
       textAlign: "center",
       background: "#54878D",
-      color: "white",
       borderRadius: "10px",
     },
   },
@@ -174,7 +173,7 @@ const NotRetiredResult = withStyles(styles)(
         Math.round(parseInt(newPercentage) * currentIncome) / 100.0
       );
     };
-    const handleretirementIncomeChanged = (e) => {
+    const handleRetirementIncomeChanged = (e) => {
       if (isNaN(parseInt(e.target.value))) {
         setRetirementIncome(0);
       } else {
@@ -251,7 +250,7 @@ const NotRetiredResult = withStyles(styles)(
                   <Typography gutterBottom align="left" variant="h6">
                     We recommend that you have
                     <span className={classes.numbers}>
-                        ${recommendedNestEgg}
+                      <NumberFormat value={recommendedNestEgg} displayType="text" prefix="$" thousandSeparator=" " decimalScale={0} />
                     </span>
                     saved for retirement.
                   </Typography>
@@ -261,7 +260,7 @@ const NotRetiredResult = withStyles(styles)(
                     <Typography gutterBottom align="left" variant="h6">
                       It looks like you will need to save additional
                       <span className={classes.numbers}>
-                        ${Math.round(recommendedNestEgg - estimatedNestEgg)}
+                        <NumberFormat value={recommendedNestEgg - estimatedNestEgg} displayType="text" prefix="$" thousandSeparator=" " decimalScale={0} />
                       </span>
                     </Typography>
                   ) : (
@@ -296,14 +295,14 @@ const NotRetiredResult = withStyles(styles)(
                   />
                   <div>
                     <Typography className={classes.recommendedNestEgg}>
-                      ${recommendedNestEgg}
+                      <NumberFormat value={recommendedNestEgg} displayType="text" prefix="$" thousandSeparator=" " decimalScale={0} />
                       <Typography variant="h5">
                         What you will need for retirement
                       </Typography>
                     </Typography>
 
                     <Typography className={classes.estimatedNestEgg}>
-                      ${Math.round(estimatedNestEgg)}
+                      <NumberFormat value={estimatedNestEgg} displayType="text" prefix="$" thousandSeparator=" " decimalScale={0} />
                       <Typography variant="h5">
                         What you will have for retirement
                       </Typography>
@@ -341,13 +340,10 @@ const NotRetiredResult = withStyles(styles)(
           </Grid>
           <Grid item xs={7}>
             <Typography variant="h5" gutterBottom align="left">
-              I want my income to be ${" "}
-              <TextField
-                id="filled-basic"
-                variant="filled"
-                className={classes.incomeInput}
-                value={retirementIncome}
-                onChange={handleretirementIncomeChanged}
+              I want my income to be
+              <MoneyInput
+                value={Math.round(retirementIncome)}
+                onChange={handleRetirementIncomeChanged}
               />
               {" "}in retirement
             </Typography>
@@ -417,53 +413,31 @@ const NotRetiredResult = withStyles(styles)(
               variant="h5"
               className={classes.input}
             >
-              I am{" "}
-              <TextField
-                variant="filled"
-                className={classes.textField}
+              I am
+              <CustomTextField
                 value={age}
                 onChange={handleAgeChanged}
-              />{" "}
+              />
               years old.I want to retire when I am
-              <TextField
-                variant="filled"
+              <CustomTextField
                 value={retiredAge}
                 onChange={handleRetiredAgeChanged}
-              />{" "}
-              years old.
-            </Typography>
-            <Typography
-              gutterBottom
-              align="left"
-              variant="h5"
-              className={classes.input}
-            >
-              I make $
-              <TextField
-                variant="filled"
+              />
+              years old. I make
+              <MoneyInput
                 value={income}
                 onChange={handleIncomeChanged}
-              />{" "}
-              per year. I've saved $
-              <TextField
-                variant="filled"
+              />
+              per year. I've saved
+              <MoneyInput
                 value={saved}
                 onChange={handleSavedChanged}
-              />{" "}
-              for retirement.
-            </Typography>
-            <Typography
-              gutterBottom
-              align="left"
-              variant="h5"
-              className={classes.input}
-            >
-              I plan to save an additional $
-              <TextField
-                variant="filled"
+              />
+              for retirement. I plan to save an additional
+              <MoneyInput
                 value={additionalSaving}
                 onChange={handleAdditionalSavingChanged}
-              />{" "}
+              />
               per month until I retire.
             </Typography>
           </Grid>

@@ -48,8 +48,8 @@ const Stepper = withStyles(styles)(({ classes, setCurrentTitle }) => {
   const [age, setAge] = useState(null);
   const [retiredAge, setRetiredAge] = useState(null);
   const [income, setIncome] = useState(null);
-  const [saved, setSaved] = useState(null);
-  const [additionalSaving, setAdditionalSaving] = useState(null);
+  const [saved, setSaved] = useState("");
+  const [additionalSaving, setAdditionalSaving] = useState("");
 
   const [currentNestEgg, setCurrentNestEgg] = useState(null);
   const [monthlyPension, setMonthlyPension] = useState(null);
