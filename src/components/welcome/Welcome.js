@@ -204,7 +204,7 @@ function Welcome({ setCurrentTitle }) {
               align="right"
             >
               <a
-                href="Nestful_Pre-Retirement_Checklist.pdf"
+                href="Nestful_Checklist.pdf"
                 target="blank"
                 className={classes.LinkStyle}
               >
